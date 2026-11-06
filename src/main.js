@@ -2,7 +2,7 @@ import './style.css';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { Stage } from './scene.js';
-import { BRAND, BOTTLES, PRODUCTS, PROCESS, IG_URL, WA_NUMBER, FREE_SHIP_FROM, INSTALLMENTS } from './data.js';
+import { BRAND, BOTTLES, PRODUCTS, BOTANICALS, RECIPES, STORY, IG_URL, WA_NUMBER, FREE_SHIP_FROM, INSTALLMENTS } from './data.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -78,7 +78,9 @@ pin.appendChild(rail);
 const chaps = $$('.chap', pin);
 const railBtns = $$('button', rail);
 
-$('#steps').innerHTML = PROCESS.map((s, i) => `<div class="step rv"><i>0${i + 1}</i><h4>${s.t}</h4><p>${s.d}</p></div>`).join('');
+$('#botGrid').innerHTML = BOTANICALS.map((b) => `<div class="bot rv"><img src="${BASE}photos/botanicos/${b.id}.jpg" alt="${b.n}" width="104" height="104" /><div><h4>${b.n}</h4><p>${b.d}</p></div></div>`).join('');
+$('#recipes').innerHTML = RECIPES.map((x) => `<div class="rc rv" style="--c:${x.c}"><h4>${x.t}</h4><p>${x.d}</p><ul>${x.i.map((i) => `<li>${i}</li>`).join('')}</ul></div>`).join('');
+$('#timeline').innerHTML = STORY.map((s, i) => `<div class="tl rv"><i>${i + 1}</i><h4>${s.t}</h4><p>${s.d}</p></div>`).join('');
 
 // manifiesto: palabra por palabra
 const manEl = $('#manText');
@@ -139,7 +141,7 @@ document.addEventListener('click', (e) => {
   else if (t.dataset.inc) { cart.find((l) => l.id === t.dataset.inc).q++; save(); renderCart(); }
   else if (t.dataset.dec) { const l = cart.find((x) => x.id === t.dataset.dec); l.q--; if (l.q <= 0) cart = cart.filter((x) => x !== l); save(); renderCart(); }
   else if (t.dataset.rm) { cart = cart.filter((l) => l.id !== t.dataset.rm); save(); renderCart(); }
-  else if (t.dataset.go) { lenis.scrollTo(L.bottles + (L.bottlesH - innerHeight) * (+t.dataset.go / 3), { duration: 2 }); }
+  else if (t.dataset.go) { lenis.scrollTo(L.bottles + (L.bottlesH - innerHeight) * (+t.dataset.go / (BOTTLES.length - 1)), { duration: 2 }); }
   else if (t.dataset.wa) { const p = prod(t.dataset.wa); window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hola! Quiero comprar: 1 x ${p.name} (${money(p.price)})`)}`, '_blank'); }
   else if (t.matches('a[href^="#"]')) {
     const target = $(t.getAttribute('href'));
@@ -179,7 +181,7 @@ function measure() {
     manifesto: topOf($('#manifesto')),
     bottles: topOf($('#bottles')),
     bottlesH: $('#bottles').offsetHeight,
-    process: topOf($('#process')),
+    process: topOf($('#botanicos')),
     gallery: topOf($('#tienda')),
     finale: topOf($('#finale')),
     finaleH: $('#finale').offsetHeight,
@@ -187,6 +189,8 @@ function measure() {
   stage?.setLayout(L);
 }
 addEventListener('resize', measure);
+addEventListener('load', measure);
+new ResizeObserver(() => measure()).observe(document.body);
 
 /* ── arranque ── */
 let stage = null;
@@ -197,8 +201,8 @@ async function boot() {
   prog(8);
   await Promise.race([
     Promise.all([
-      document.fonts.load('800 80px "Bodoni Moda"'), document.fonts.load('italic 700 80px "Bodoni Moda"'),
-      document.fonts.load('600 40px "Bodoni Moda"'), document.fonts.load('500 16px "Space Grotesk"'),
+      document.fonts.load('80px "Rye"'), document.fonts.load('italic 30px "IM Fell English"'),
+      document.fonts.load('500 16px "Barlow"'), document.fonts.load('600 16px "Barlow Condensed"'),
     ]),
     new Promise((r) => setTimeout(r, 3500)),
   ]).catch(() => {});
@@ -210,14 +214,15 @@ async function boot() {
     console.warn('WebGL no disponible', err);
     document.body.classList.add('no-webgl');
   }
+  if (stage) await Promise.all(stage.items.map((b) => b.ready));
   prog(55);
   // imágenes de producto: foto real si existe, si no un render 3D de la botella
   for (const p of PRODUCTS) {
     const real = await findPhoto(p.id);
     let shot = null;
-    if (stage) { await new Promise((r) => requestAnimationFrame(r)); shot = stage.snapshot(p.shot); }
+    if (stage && !real) { await new Promise((r) => requestAnimationFrame(r)); shot = stage.snapshot(p.shot); }
     renders[p.id] = real || shot || '';
-    p.imgA = real || shot; p.imgB = real && shot ? shot : null;
+    p.imgA = real || shot; p.imgB = null;
     prog(55 + (PRODUCTS.indexOf(p) + 1) * (40 / PRODUCTS.length));
   }
   buildGrid();
@@ -239,7 +244,7 @@ function buildGrid() {
       ${p.tag ? `<span class="badge">${p.tag}</span>` : ''}
       <span class="ship-b">Envío gratis*</span>
       <div class="ph ${p.imgB ? 'two' : ''}">
-        <img class="a" src="${p.imgA || ''}" alt="${p.name}" loading="lazy" />
+        <img class="a" src="${p.imgA || ''}" alt="${p.name}" />
         ${p.imgB ? `<img class="b" src="${p.imgB}" alt="" loading="lazy" />` : ''}
       </div>
       <div class="info">
@@ -294,7 +299,7 @@ gsap.ticker.add(() => {
     chaps.forEach((c, i) => {
       const d = f - i;
       const o = phase === 'vars' || phase === 'manifesto' || phase === 'process' ? clamp(1 - Math.abs(d) * 2.4) : 0;
-      const vis = (phase === 'vars') ? o : (phase === 'process' && i === 3) ? o * (1 - clamp((y - (L.bottles + L.bottlesH - innerHeight)) / (innerHeight * 0.5))) : 0;
+      const vis = (phase === 'vars') ? o : (phase === 'process' && i === BOTTLES.length - 1) ? o * (1 - clamp((y - (L.bottles + L.bottlesH - innerHeight)) / (innerHeight * 0.5))) : 0;
       c.style.setProperty('--o', vis.toFixed(3));
       c.style.setProperty('--dy', (d * -70).toFixed(1) + 'px');
       c.classList.toggle('on', vis > 0.5);

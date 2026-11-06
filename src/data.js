@@ -1,135 +1,99 @@
 // ─────────────────────────────────────────────────────────────
-//  EDITA AQUÍ: nombres, textos y colores de cada botella.
-//  Las fotos reales se sueltan en /public/photos/<id>.jpg
-//  (también .jpeg .png .webp). Si no existe, el sitio usa un
-//  render 3D de la botella como reemplazo.
+//  EDITÁ ACÁ: textos, precios, contacto.
+//  Imágenes reales: /public/photos/<id>.jpg · etiquetas: /public/labels/
 // ─────────────────────────────────────────────────────────────
-// MARCA (placeholder): cambia el nombre aca y se actualiza todo el sitio
-export const BRAND = { name: 'Ébano', full: 'Ébano Gin', hero: 'ÉBANO GIN' };
-// Redes y contacto: dejalos vacios para ocultarlos
+export const BRAND = { name: 'Argentino', full: 'Argentino Gin', hero: 'ARGENTINO' };
+
+// Redes y contacto: dejalos vacíos para ocultarlos
 export const IG_URL = '';
-export const IG_HANDLE = '';
-// Número de WhatsApp donde llegan los pedidos (código país + área + número, sin + ni espacios)
-export const WA_NUMBER = ''; // ej: '5491155551234'
-export const FREE_SHIP_FROM = 60000; // ARS · envío gratis a partir de
+export const WA_NUMBER = ''; // ej: '5491155551234' (código país + área + número)
+export const FREE_SHIP_FROM = 60000; // ARS · envío gratis desde
 export const INSTALLMENTS = 3; // cuotas sin interés que se muestran
 
 export const BOTTLES = [
   {
-    id: 'clasico',
+    id: 'pampa',
     n: '01',
-    name: 'Clásico',
-    kind: 'London Dry Gin',
-    tagline: 'El que rompió el molde.',
+    name: 'Pampa',
+    word: 'PAMPA',
+    kind: 'Gin Artesanal',
+    tagline: 'The spirit of the Pampa.',
     desc:
-      'Enebro firme, cítricos limpios y un final seco que no pide permiso. La base de toda la colección: simple, directo y imposible de olvidar.',
-    notes: ['Enebro', 'Cilantro', 'Cáscara de limón'],
-    serve: 'Gin & tonic · rodaja de limón · mucho hielo',
-    abv: 43,
-    ml: 700,
-    shape: 'classic',
-    emblem: 'sun',
-    accent: '#e6c378',
-    bg: '#06090b',
-    glass: '#e4f3ee',
-    liquid: ['#7fb9b4', '#e6fbf6'],
-    label: { bg: '#0d0f12', foil: '#d8b26a', ink: '#f2e8d2' },
-    cap: '#0b0b0c',
-    capMetal: 0.2,
-    wax: '#7d1a28',
-    botanical: 'berries',
+      'Enebro, cilantro y especias en una receta pensada para el galope. Destilado y embotellado en la Patagonia: carácter firme, final largo y aire de campo abierto.',
+    notes: ['Enebro', 'Cilantro en grano', 'Pimienta de Jamaica'],
+    serve: 'Gin tonic · twist de limón · hielo grande',
+    abv: 40, ml: 750,
+    label: 'labels/pampa.jpg', labelAspect: 420 / 628,
+    accent: '#e0a24a', bg: '#130b05',
+    glass: { color: '#fff0d6', att: '#d9a24e', dist: 1.6 },
+    liquid: ['#a8641c', '#f0b45a'],
+    weave: ['#3a2418', '#e8d6b0', '#8a4a26'],
+    ink: '#5b3a1e', botanical: { type: 'berries', color: '#2c3270' },
   },
   {
-    id: 'citrico',
+    id: 'mar',
     n: '02',
-    name: 'Cítrico',
-    kind: 'Citrus Gin',
-    tagline: 'Luz líquida.',
+    name: 'Cítrico & Mar',
+    word: 'MAR',
+    kind: 'Gin Cítrico',
+    tagline: 'Sal, limón y viento del sur.',
     desc:
-      'Pomelo, naranja amarga y lima exprimidos sobre el enebro. Brillante, jugoso, con una acidez que despierta todo lo demás.',
-    notes: ['Pomelo', 'Naranja amarga', 'Lima'],
-    serve: 'Tónica suave · gajo de pomelo · romero',
-    abv: 40,
-    ml: 700,
-    shape: 'slim',
-    emblem: 'citrus',
-    accent: '#ffb23e',
-    bg: '#0d0a03',
-    glass: '#fff6dc',
-    liquid: ['#d99a1c', '#fff0a8'],
-    label: { bg: '#f1e3bd', foil: '#a8620a', ink: '#2a1a05' },
-    cap: '#e8a21f',
-    capMetal: 0.7,
-    wax: '#2a1a05',
-    botanical: 'citrus',
+      'Limón y pomelo con un toque de algas patagónicas. Fresco, brillante y salino, como una costa abierta al atardecer.',
+    notes: ['Limón', 'Pomelo', 'Algas patagónicas'],
+    serve: 'Tónica suave · rodaja de limón · pomelo',
+    abv: 40, ml: 750,
+    label: 'labels/mar.jpg', labelAspect: 187 / 282,
+    accent: '#62b8a4', bg: '#06100e',
+    glass: { color: '#f7f3c4', att: '#d8d070', dist: 2.6 },
+    liquid: ['#cfc25a', '#f4efb4'],
+    weave: ['#1f6f66', '#dcd3b0', '#3f9a8e'],
+    ink: '#2f6b60', botanical: { type: 'citrus', color: '#ffd23a' },
   },
   {
-    id: 'rosa',
+    id: 'andes',
     n: '03',
-    name: 'Rosa',
-    kind: 'Pink Gin',
-    tagline: 'Dulce no. Peligrosa sí.',
+    name: 'Gin de los Andes',
+    word: 'ANDES',
+    kind: 'Gin de Frutos Azules',
+    tagline: 'Montaña, arándano y frío puro.',
     desc:
-      'Pétalos de rosa, frutos rojos y un toque de pimienta rosa. Floral, elegante y con un fondo que muerde.',
-    notes: ['Rosa', 'Frutos rojos', 'Pimienta rosa'],
-    serve: 'Tónica de frutos rojos · pétalos · hielo grande',
-    abv: 40,
-    ml: 700,
-    shape: 'flask',
-    emblem: 'rose',
-    accent: '#ff6b9e',
-    bg: '#12060c',
-    glass: '#ffe9f1',
-    liquid: ['#e0487f', '#ffc4d9'],
-    label: { bg: '#2a0b19', foil: '#f3b6c9', ink: '#ffe9f1' },
-    cap: '#f3b6c9',
-    capMetal: 0.9,
-    wax: '#f3b6c9',
-    botanical: 'petals',
-  },
-  {
-    id: 'noche',
-    n: '04',
-    name: 'Noche',
-    kind: 'Reserva Oscura',
-    tagline: 'Para después de medianoche.',
-    desc:
-      'Enebro ahumado, cacao y vainilla en vidrio oscuro. Profundo, sedoso y pensado para tomarse despacio, sin hielo o con uno solo.',
-    notes: ['Enebro ahumado', 'Cacao', 'Vainilla'],
-    serve: 'Solo o con un cubo grande · twist de naranja',
-    abv: 46,
-    ml: 700,
-    shape: 'tall',
-    emblem: 'moon',
-    accent: '#7f8cff',
-    bg: '#04051a',
-    glass: '#1a2260',
-    liquid: ['#2a2f8f', '#7d86ff'],
-    label: { bg: '#080a24', foil: '#c9ccff', ink: '#e6e8ff' },
-    cap: '#c9ccff',
-    capMetal: 1,
-    wax: '#080a24',
-    botanical: 'stars',
+      'Arándanos de montaña sobre una base de enebro. Profundo, frutal y sedoso, con el color de un atardecer en la cordillera.',
+    notes: ['Arándano', 'Enebro', 'Pimienta'],
+    serve: 'Tónica de frutos rojos · arándanos · mucho hielo',
+    abv: 40, ml: 750,
+    label: 'labels/andes.jpg', labelAspect: 194 / 290,
+    accent: '#b184cc', bg: '#0e0714',
+    glass: { color: '#dcb8e8', att: '#6a2a80', dist: 1.0 },
+    liquid: ['#4a1c55', '#a45aa8'],
+    weave: ['#3a2342', '#c4b4cc', '#7b57a0'],
+    ink: '#5a3a70', botanical: { type: 'blue', color: '#4a3a8c' },
   },
 ];
 
-export const PROCESS = [
-  { t: 'Botánicos', d: 'Cada ingrediente se elige a mano. Nada entra por casualidad.' },
-  { t: 'Destilación', d: 'Lotes pequeños, paciencia y buen oído para cortar en el punto exacto.' },
-  { t: 'Reposo', d: 'Los aromas se asientan hasta encontrar su lugar en el vaso.' },
-  { t: 'Botella', d: 'Vidrio, lacre y etiqueta. Lista para abrir el próximo capítulo.' },
-];
-
-// ─────────────────────────────────────────────────────────────
-//  TIENDA · precios en ARS (PLACEHOLDERS: cambialos por los reales)
-//  shot = qué botellas aparecen en el render si no hay foto real
-//  Foto real → /public/photos/<id>.jpg
-// ─────────────────────────────────────────────────────────────
 export const PRODUCTS = [
-  { id: 'clasico', cat: 'gin', name: `${BRAND.name} Clásico`, sub: 'London Dry · 700 ml · 43%', price: 22000, shot: [0], bottle: 0, tag: 'Más vendido' },
-  { id: 'citrico', cat: 'gin', name: `${BRAND.name} Cítrico`, sub: 'Citrus Gin · 700 ml · 40%', price: 23500, shot: [1], bottle: 1 },
-  { id: 'rosa', cat: 'gin', name: `${BRAND.name} Rosa`, sub: 'Pink Gin · 700 ml · 40%', price: 23500, shot: [2], bottle: 2, tag: 'Novedad' },
-  { id: 'noche', cat: 'gin', name: `${BRAND.name} Noche`, sub: 'Reserva Oscura · 700 ml · 46%', price: 29000, shot: [3], bottle: 3, tag: 'Edición limitada' },
-  { id: 'duo', cat: 'combo', name: 'Dúo Clásico + Cítrico', sub: '2 botellas · 700 ml c/u', price: 42000, was: 45500, shot: [0, 1], tag: 'Combo' },
-  { id: 'coleccion', cat: 'combo', name: 'Colección Completa', sub: 'Las 4 botellas · caja regalo', price: 89000, was: 98000, shot: [0, 1, 2, 3], tag: 'Regalo' },
+  { id: 'pampa', cat: 'gin', name: 'Argentino Pampa', sub: 'Gin Artesanal · 750 ml · 40%', price: 24000, shot: [0], bottle: 0, tag: 'Más vendido' },
+  { id: 'mar', cat: 'gin', name: 'Argentino Cítrico & Mar', sub: 'Gin Cítrico · 750 ml · 40%', price: 24000, shot: [1], bottle: 1 },
+  { id: 'andes', cat: 'gin', name: 'Argentino de los Andes', sub: 'Gin de Frutos Azules · 750 ml · 40%', price: 26000, shot: [2], bottle: 2, tag: 'Novedad' },
+  { id: 'trio', cat: 'combo', name: 'Trío Argentino', sub: 'Pampa + Mar + Andes · 3 × 750 ml', price: 69000, was: 74000, shot: [0, 1, 2], bottle: 0, tag: 'Combo' },
+];
+
+export const BOTANICALS = [
+  { id: 'enebro', n: 'Enebro', d: 'La baya resinosa y fresca que define al gin.' },
+  { id: 'cilantro', n: 'Cilantro en grano', d: 'Cítrico y especiado: suma frescura y cuerpo.' },
+  { id: 'cardamomo', n: 'Cardamomo', d: 'Verde, dulce y floral, con un fondo cálido.' },
+  { id: 'pimienta', n: 'Pimienta de Jamaica', d: 'Notas de clavo y canela para el final.' },
+  { id: 'angelica', n: 'Raíz de angélica', d: 'Terrosa: une y alarga todos los aromas.' },
+  { id: 'granos', n: 'Granos del paraíso', d: 'Picantes y florales, profundos en boca.' },
+];
+
+export const RECIPES = [
+  { t: 'Gin Tonic Pampa', c: '#e0a24a', i: ['50 ml Argentino Pampa', 'Tónica premium', 'Twist de limón', 'Cilantro en grano'], d: 'El clásico, con aire de campo.' },
+  { t: 'Cítrico & Mar', c: '#62b8a4', i: ['50 ml Cítrico & Mar', 'Tónica suave', 'Rodaja de limón', 'Pomelo'], d: 'Fresco como una costa abierta.' },
+  { t: 'Andes Berry', c: '#b184cc', i: ['50 ml Gin de los Andes', 'Tónica de frutos rojos', 'Arándanos', 'Hielo grande'], d: 'Profundo, frutal y de montaña.' },
+];
+
+export const STORY = [
+  { t: 'Patagonia', d: 'Donde se destila y se embotella: viento, estepa y agua fría.' },
+  { t: 'Pampa', d: 'El horizonte llano y el galope que inspiraron la primera receta.' },
+  { t: 'Andes', d: 'Frutos azules y aire de montaña en el vidrio más oscuro.' },
 ];

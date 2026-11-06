@@ -70,7 +70,7 @@ export class Stage {
   /* ── fondo único: glows + palabras gigantes (se refractan en el vidrio) ── */
   buildBackdrop() {
     const D = this.data;
-    const words = D.map((b) => makeWordTexture(b.name.toUpperCase(), b.accent));
+    const words = D.map((b) => makeWordTexture(b.word, b.accent));
     this.heroTexOne = this.makeHeroTexture(false);
     this.heroTexTwo = this.makeHeroTexture(true);
     const u = {
@@ -78,10 +78,10 @@ export class Stage {
       uHero: { value: this.heroTexOne },
       uHeroOp: { value: 0 },
       uHeroRect: { value: new THREE.Vector4(-6.4, -1.3, 12.8, 3.2) },
-      uW0: { value: words[0] }, uW1: { value: words[1] }, uW2: { value: words[2] }, uW3: { value: words[3] },
+      uW0: { value: words[0] }, uW1: { value: words[1] ?? words[0] }, uW2: { value: words[2] ?? words[0] }, uW3: { value: words[3] ?? words[0] },
       uWOp: { value: new THREE.Vector4() },
-      uGlow: { value: D.map((_, i) => new THREE.Vector4(i * SP, 0.2, 0, 3.4)) },
-      uCol: { value: D.map((b) => new THREE.Color(b.accent)) },
+      uGlow: { value: Array.from({ length: 4 }, (_, i) => new THREE.Vector4(i * SP, 0.2, 0, 3.4)) },
+      uCol: { value: Array.from({ length: 4 }, (_, i) => new THREE.Color(D[Math.min(i, D.length - 1)].accent)) },
       uTime: { value: 0 },
     };
     this.bd = u;
@@ -131,9 +131,9 @@ export class Stage {
     const c = cv.getContext('2d');
     c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineJoin = 'round';
     const draw = (txt, y, size) => {
-      c.font = `800 ${size}px ${DISPLAY}`;
+      c.font = `400 ${size}px ${DISPLAY}`;
       const mw = c.measureText(txt).width;
-      if (mw > w * 0.94) { size *= (w * 0.94) / mw; c.font = `800 ${size}px ${DISPLAY}`; }
+      if (mw > w * 0.94) { size *= (w * 0.94) / mw; c.font = `400 ${size}px ${DISPLAY}`; }
       const g = c.createLinearGradient(0, y - size / 2, 0, y + size / 2);
       g.addColorStop(0, '#fff3cf'); g.addColorStop(0.55, '#e6c378'); g.addColorStop(1, '#8c6a2a');
       c.globalAlpha = 0.16; c.fillStyle = g; c.fillText(txt, w / 2, y);
@@ -224,7 +224,7 @@ export class Stage {
     const wide = this.aspect > 1.0;
     const sx = wide ? 1.9 * Math.min(1, this.aspect / 1.5) : 0;
     const sy = wide ? 0 : -1.15;
-    return { tx: f * SP - sx * Math.cos(Math.PI * f), ty: sy, dist: wide ? 9.0 : Math.max(10, this.fitDist(3.8)), az: Math.sin(Math.PI * f) * 0.18, el: 0.06 };
+    return { tx: f * SP - sx * Math.cos(Math.PI * f), ty: sy, dist: wide ? 11.2 : Math.max(12, this.fitDist(3.8)), az: Math.sin(Math.PI * f) * 0.18, el: 0.06 };
   }
   lerpPose(a, b, t) {
     return { tx: lerp(a.tx, b.tx, t), ty: lerp(a.ty, b.ty, t), dist: lerp(a.dist, b.dist, t), az: lerp(a.az, b.az, t), el: lerp(a.el, b.el, t) };
@@ -237,26 +237,27 @@ export class Stage {
     const asp = this.aspect;
     const wide = asp > 1.0;
     const intro = ease(this.intro.v);
+    const N = this.data.length, F = N - 1;
 
     // progreso por tramo
     const h = clamp(scroll / L.manifesto);
     const m = clamp((scroll - L.manifesto) / (L.bottles - L.manifesto));
     const bRange = Math.max(1, L.bottlesH - vh);
-    const f = clamp((scroll - L.bottles) / bRange) * 3;
+    const f = clamp((scroll - L.bottles) / bRange) * F;
     const procEnd = L.process - vh + vh * 1.1;
     const u = clamp((scroll - (L.process - vh)) / (vh * 1.1));
     const q = clamp((scroll - (L.finale - vh * 0.4)) / Math.max(1, L.finaleH - vh * 0.6));
 
-    const heroStart = { tx: 0, ty: wide ? 0 : -0.4, dist: wide ? 12.5 : Math.max(12, this.fitDist(4.6)), az: 0, el: 0.05 };
-    const heroEnd = { tx: 0, ty: wide ? 0 : -0.4, dist: wide ? 9.0 : Math.max(10, this.fitDist(3.8)), az: 0, el: 0.05 };
-    const processP = { tx: 1.5 * SP, ty: 0.5, dist: this.fitDist(17), az: 0, el: 0.1 };
-    const finaleP = { tx: 1.5 * SP, ty: wide ? 0.9 : 1.6, dist: this.fitDist(wide ? 14.5 : 14.8), az: 0, el: 0.04 };
+    const heroStart = { tx: 0, ty: wide ? 0 : -0.4, dist: wide ? 14.5 : Math.max(14, this.fitDist(4.8)), az: 0, el: 0.05 };
+    const heroEnd = { tx: 0, ty: wide ? 0 : -0.4, dist: wide ? 11.2 : Math.max(12, this.fitDist(3.8)), az: 0, el: 0.05 };
+    const processP = { tx: (F / 2) * SP, ty: 0.5, dist: this.fitDist(15), az: 0, el: 0.1 };
+    const finaleP = { tx: (F / 2) * SP, ty: wide ? 0.9 : 1.6, dist: this.fitDist(wide ? 12.5 : 12.8), az: 0, el: 0.04 };
 
     let pose, phase;
     if (scroll < L.manifesto) { pose = this.lerpPose(heroStart, heroEnd, ease(h)); phase = 'hero'; }
     else if (scroll < L.bottles) { pose = this.lerpPose(heroEnd, this.varPose(0), ease(m)); phase = 'manifesto'; }
     else if (scroll < L.bottles + bRange) { pose = this.varPose(f); phase = 'vars'; }
-    else if (u < 1 || scroll < L.finale - vh * 0.4) { pose = this.lerpPose(this.varPose(3), processP, ease(u)); phase = 'process'; }
+    else if (u < 1 || scroll < L.finale - vh * 0.4) { pose = this.lerpPose(this.varPose(F), processP, ease(u)); phase = 'process'; }
     else { pose = processP; phase = 'process'; }
     if (q > 0) { pose = this.lerpPose(processP, finaleP, ease(q)); phase = 'finale'; }
     if (scroll >= L.gallery && scroll < L.finale - vh * 0.4) phase = 'gallery';
@@ -275,7 +276,7 @@ export class Stage {
 
     // fondo / acento global
     const bg = new THREE.Color(), accent = new THREE.Color();
-    const fi = clamp(f, 0, 3), i0 = Math.floor(Math.min(fi, 2.999)), tf = fi - i0;
+    const fi = clamp(f, 0, F), i0 = Math.floor(Math.min(fi, F - 0.001)), tf = fi - i0;
     const bgA = new THREE.Color(this.data[i0].bg), bgB = new THREE.Color(this.data[i0 + 1].bg);
     const acA = new THREE.Color(this.data[i0].accent), acB = new THREE.Color(this.data[i0 + 1].accent);
     bg.copy(bgA).lerp(bgB, tf); accent.copy(acA).lerp(acB, tf);
@@ -298,8 +299,8 @@ export class Stage {
       let o = 0;
       if (phase === 'vars') o = clamp(1 - Math.abs(f - i) * 1.35);
       else if (phase === 'manifesto') o = i === 0 ? ease(clamp((m - 0.55) * 2.2)) : 0;
-      else if (phase === 'process' && i === 3) o = 1 - ease(u);
-      wop[i] = o * 0.85;
+      else if (phase === 'process' && i === F) o = 1 - ease(u);
+      wop[i] = o * 0.5;
     });
     this.bd.uWOp.value.set(...wop);
     this.bd.uTime.value = time;
@@ -308,12 +309,12 @@ export class Stage {
     // botellas
     const waveQ = (i) => ease(clamp(q * 1.7 - i * 0.14));
     this.items.forEach((b, i) => {
-      const a = phase === 'vars' ? clamp(1 - Math.abs(f - i)) : phase === 'hero' || phase === 'manifesto' ? (i === 0 ? 1 : 0.0) : phase === 'process' && u < 1 ? lerp(i === 3 ? 1 : 0, 1, ease(u)) : 1;
+      const a = phase === 'vars' ? clamp(1 - Math.abs(f - i)) : phase === 'hero' || phase === 'manifesto' ? (i === 0 ? 1 : 0.0) : phase === 'process' && u < 1 ? lerp(i === F ? 1 : 0, 1, ease(u)) : 1;
       let rot, pop = 0, sc = 1;
       if (phase === 'hero') rot = ease(h) * TAU;
       else if (phase === 'manifesto') { rot = i === 0 ? Math.sin(Math.PI * m) * 0.55 : -2.2; pop = i === 0 ? Math.sin(Math.PI * Math.min(1, m * 1.15)) * 1.0 : 0; }
       else if (phase === 'vars') { rot = clamp(-(f - i) * 2.2, -2.2, 2.2); sc = lerp(0.82, 1, a); }
-      else if (phase === 'process') { const r0 = clamp(-(3 - i) * 2.2, -2.2, 2.2); rot = lerp(r0, 0, ease(u)); sc = lerp(0.82, 1, ease(u) * (i === 3 ? 0 : 1) + (i === 3 ? 1 : 0)); }
+      else if (phase === 'process') { const r0 = clamp(-(F - i) * 2.2, -2.2, 2.2); rot = lerp(r0, 0, ease(u)); sc = lerp(0.82, 1, ease(u) * (i === F ? 0 : 1) + (i === F ? 1 : 0)); }
       else if (phase === 'gallery') { rot = Math.sin(time * 0.4 + i) * 0.35; }
       else { rot = waveQ(i) * TAU; pop = Math.sin(Math.PI * waveQ(i)) * 0.9; }
       // hero: la botella 0 entra desde arriba girando
@@ -322,11 +323,12 @@ export class Stage {
       else if (phase === 'hero' || phase === 'manifesto') { sc = 0.82; }
       b.root.position.y = yOff;
       b.root.rotation.y = rot + (phase === 'hero' || phase === 'vars' || phase === 'finale' ? Math.sin(time * 0.35 + i) * 0.06 : 0);
-      b.root.scale.setScalar(sc);
+      b.root.scale.setScalar(phase === 'vars' ? Math.max(0.001, sc * clamp(a * 3)) : sc);
       b.root.visible = (phase === 'hero' || phase === 'manifesto') ? i === 0 : phase === 'vars' ? Math.abs(f - i) < 0.995 : true;
       b.stopper.position.y = pop;
       b.stopper.rotation.y = pop * 3.0;
       b.liqMat.uniforms.uTime.value = time;
+      b.sway?.(time);
       const glowI = (i === 0 && (phase === 'hero' || phase === 'manifesto') ? intro : a) * 1.0;
       b.liqMat.uniforms.uBoost.value = 0.75 + glowI * 0.4;
       b.podRing.material.color.set(this.data[i].accent).multiplyScalar(0.4 + 2 * glowI);
@@ -371,8 +373,8 @@ export class Stage {
     const main = this.data[indices[0]];
     const bg = new THREE.Color(main.bg).lerp(new THREE.Color('#000'), 0.1);
     const spanW = Math.max(3.4, (n - 1) * gap + 3.2);
-    const dist = Math.max(8.6, spanW / (2 * Math.tan(THREE.MathUtils.degToRad(15)) * (w / h)));
-    cam.position.set(0, 0.3, dist);
+    const dist = Math.max(11.5, spanW / (2 * Math.tan(THREE.MathUtils.degToRad(15)) * (w / h)));
+    cam.position.set(0, 0.4, dist);
     cam.lookAt(0, -0.05, 0);
     this.backdrop.position.x = 0;
     this.bd.uBg.value.copy(bg); this.scene.background.copy(bg);
