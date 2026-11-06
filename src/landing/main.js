@@ -13,7 +13,7 @@ const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = matchMedia('(max-width: 860px)').matches || /Android|iPhone|iPad/i.test(navigator.userAgent);
 const lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 4) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-const hiQ = !isMobile && !lowEnd;
+const hiQ = (!isMobile && !lowEnd) || location.search.includes('hq'); // ?hq fuerza la calidad alta (grabación de video)
 
 /* ───────── contenido ───────── */
 const pin = $('#pin');
@@ -166,6 +166,7 @@ function setBotanicals(i, g, r) {
 function frame(now) {
   requestAnimationFrame(frame);
   if (document.hidden) return;
+  if (window.__capNow !== undefined) now = window.__capNow; // reloj virtual: sólo lo usa el grabador de video
   lenis?.raf(now);
   const y = scrollY();
   const t = now / 1000;

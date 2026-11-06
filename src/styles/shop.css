@@ -4,7 +4,7 @@
   radial-gradient(80% 50% at 10% 100%, rgba(228, 204, 148, 0.5), rgba(228, 204, 148, 0) 62%),
   linear-gradient(180deg, #fdf8ee 0%, #f3e6c6 100%); }
 main, .footer, .nav { position: relative; z-index: 2; }
-.nav { position: sticky; top: 0; }
+.nav { position: sticky; top: 0; z-index: 60; } /* por encima del contenido: si no, al hacer scroll el carrito queda tapado e inaccesible */
 .cart-btn { display: flex; align-items: center; gap: 9px; padding: 9px 16px; border: 1px solid var(--gold); border-radius: 2px; font-family: var(--cond); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-lo); background: rgba(255, 255, 255, 0.5); transition: background 0.3s, color 0.3s; }
 .cart-btn:hover { background: var(--gold); color: #fff; }
 .cart-btn b { background: var(--gold-lo); color: #fff; border-radius: 99px; min-width: 21px; height: 21px; display: grid; place-items: center; font-size: 0.78rem; padding: 0 6px; letter-spacing: 0; }
