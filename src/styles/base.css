@@ -118,3 +118,17 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .reveal { transition: none; opacity: 1; transform: none; }
   .gold-text { animation: none; }
 }
+
+/* ── menú principal para celular ── */
+.menu-btn { display: none; width: 46px; height: 46px; border: 1px solid var(--gold); border-radius: 2px; background: rgba(255, 255, 255, 0.55); position: relative; flex: none; margin-left: 10px; }
+.menu-btn span { position: absolute; left: 12px; right: 12px; height: 2px; background: var(--gold-lo); transition: transform 0.4s var(--ease), top 0.4s var(--ease); }
+.menu-btn span:nth-child(1) { top: 18px; } .menu-btn span:nth-child(2) { top: 26px; }
+body.menu-open .menu-btn span:nth-child(1) { top: 22px; transform: rotate(45deg); }
+body.menu-open .menu-btn span:nth-child(2) { top: 22px; transform: rotate(-45deg); }
+.menu { display: none; position: fixed; inset: 0; z-index: 45; padding: 110px var(--pad) 40px; background: linear-gradient(180deg, rgba(253, 248, 238, 0.97), rgba(239, 220, 176, 0.98)); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); opacity: 0; visibility: hidden; transition: opacity 0.45s var(--ease), visibility 0.45s; overflow-y: auto; }
+body.menu-open .menu { opacity: 1; visibility: visible; }
+.menu-in { display: flex; flex-direction: column; gap: 6px; max-width: 520px; margin: 0 auto; }
+.menu-in a { display: flex; align-items: baseline; gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--line); font-family: var(--disp); font-size: clamp(1.9rem, 8vw, 2.6rem); line-height: 1.1; color: var(--gold-lo); opacity: 0; transform: translateY(18px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); transition-delay: calc(var(--i) * 70ms + 120ms); }
+.menu-in a i { font-family: var(--cond); font-style: normal; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.24em; color: var(--mute); }
+body.menu-open .menu-in a { opacity: 1; transform: none; }
+@media (max-width: 860px) { .menu-btn { display: block; } .menu { display: block; } .nav-links a.nav-shop { display: none; } }

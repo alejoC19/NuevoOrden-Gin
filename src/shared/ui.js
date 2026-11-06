@@ -44,3 +44,24 @@ export const ICONS = {
   wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9c3-3 5 3 8 0s5 3 8 0 3 0 4-1M2 15c3-3 5 3 8 0s5 3 8 0 3 0 4-1"/></svg>',
   berry: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="14" r="5"/><circle cx="16" cy="11" r="4"/><path d="M12 5c1-2 3-2 4-1"/></svg>',
 };
+
+/** Menú principal para celular: botón + panel a pantalla completa con los mismos enlaces del encabezado. */
+export function initMenu() {
+  const nav = document.querySelector('.nav');
+  if (!nav || nav.querySelector('.menu-btn')) return;
+  const links = [...nav.querySelectorAll('.nav-links a')];
+  const home = location.pathname.replace(/\/$/, '') === '' || location.pathname === '/index.html';
+  const items = [{ href: home ? '#top' : '/', t: 'Inicio' }, ...links.map((a) => ({ href: a.getAttribute('href'), t: a.textContent.trim() }))];
+  const menu = document.createElement('div');
+  menu.className = 'menu'; menu.id = 'menu'; menu.setAttribute('aria-hidden', 'true');
+  menu.innerHTML = `<nav class="menu-in" aria-label="Menú principal">${items.map((x, i) => `<a href="${x.href}" style="--i:${i}"><i>0${i + 1}</i>${x.t}</a>`).join('')}</nav>`;
+  document.body.appendChild(menu);
+  const btn = document.createElement('button');
+  btn.className = 'menu-btn'; btn.setAttribute('aria-label', 'Abrir menú'); btn.setAttribute('aria-expanded', 'false');
+  btn.innerHTML = '<span></span><span></span>';
+  nav.appendChild(btn);
+  const set = (o) => { document.body.classList.toggle('menu-open', o); menu.setAttribute('aria-hidden', String(!o)); btn.setAttribute('aria-expanded', String(o)); btn.setAttribute('aria-label', o ? 'Cerrar menú' : 'Abrir menú'); };
+  btn.addEventListener('click', () => set(!document.body.classList.contains('menu-open')));
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+}

@@ -2,7 +2,7 @@ import '../styles/base.css';
 import '../styles/landing.css';
 import Lenis from 'lenis';
 import { BRAND, GINS, BOTANICALS, GINTONIC_STEPS, SERVES } from '../shared/data.js';
-import { initCursor, initReveals, fillContact, clamp, ICONS } from '../shared/ui.js';
+import { initCursor, initReveals, initMenu, fillContact, clamp, ICONS } from '../shared/ui.js';
 import { Stage } from './stage.js';
 import { story, cameraAt, GO_U } from './timeline.js';
 
@@ -41,6 +41,7 @@ fillContact($('#fContact'));
 $('#copy').textContent = `© ${new Date().getFullYear()} ${BRAND.full}`;
 initCursor();
 initReveals();
+initMenu();
 
 /* ───────── medidas (cacheadas; solo se actualizan si cambian de verdad) ───────── */
 const el = { hero: $('#top'), gins: $('#gins'), origen: $('#origen'), exp: $('#experiencia'), cierre: $('#cierre'), pin };

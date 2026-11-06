@@ -1,13 +1,14 @@
 import '../styles/base.css';
 import '../styles/shop.css';
 import { PRODUCTS, GINS, BOTANICALS, SHOP, BRAND } from '../shared/data.js';
-import { money, initCursor, initReveals, fillContact } from '../shared/ui.js';
+import { money, initCursor, initReveals, initMenu, fillContact } from '../shared/ui.js';
 import * as cart from '../shared/cart.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
 initCursor();
+initMenu();
 fillContact($('#fContact'));
 $('#copy').textContent = `© ${new Date().getFullYear()} ${BRAND.full}`;
 $('#perkShip').textContent = `En compras desde ${money(SHOP.freeShipFrom)}`;
