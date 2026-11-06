@@ -28,7 +28,7 @@ export const BOTANICALS = {
   granos: { name: 'Granos del paraíso', kind: 'grains', photo: '/photos/botanicos/granos.jpg', desc: 'Semillas picantes y florales, de la familia del jengibre.' },
   limon: { name: 'Cáscara de limón', kind: 'lemon', photo: null, icon: 'lemon', desc: 'Aporta los aceites cítricos que dan brillo y frescura.', confirmar: true },
   algas: { name: 'Algas', kind: 'seaweed', photo: null, icon: 'wave', desc: 'Un guiño al mar del sur: notas salinas y vegetales.', confirmar: true },
-  arandanos: { name: 'Arándanos', kind: 'blueberry', photo: null, icon: 'berry', desc: 'Fruta de montaña, de color profundo y sabor entre dulce y ácido.', confirmar: true },
+  calafate: { name: 'Calafate', kind: 'calafate', photo: null, icon: 'berry', desc: 'Baya patagónica de azul profundo, casi violeta. Dice la tradición que quien come calafate vuelve a la Patagonia.' },
 };
 
 /* ── Los tres gines ───────────────────────────────────────────
@@ -43,6 +43,7 @@ export const GINS = [
     facts: [['Graduación', '40% vol.'], ['Contenido', '750 ml'], ['Origen', 'Patagonia, Argentina']],
     img: '/product/pampa.webp',
     imgAspect: 551 / 1100,
+    depth: { map: '/product/pampa-depth.png', axis: 355.2, zmax: 183.8, w: 551, h: 1100 }, // relieve deducido de la silueta de la foto
     tint: { a: [253, 248, 238], b: [240, 224, 184], glow: [233, 200, 118] },
     botanicals: ['enebro', 'cilantro', 'cardamomo', 'pimienta', 'angelica', 'granos'],
     accent: '#b8892f',
@@ -56,9 +57,11 @@ export const GINS = [
     facts: [['Estilo', 'Cítrico'], ['Origen', 'Patagonia, Argentina']],
     img: '/product/mar.webp',
     imgAspect: 551 / 1100,
+    depth: { map: '/product/mar-depth.png', axis: 353.5, zmax: 184.5, w: 551, h: 1100 },
     tint: { a: [248, 250, 243], b: [222, 233, 214], glow: [150, 205, 185] },
     botanicals: ['limon', 'algas'],
     scene: ['limon', 'algas', 'limon'], // piezas que se dibujan en la escena 3D (se repiten para dar volumen)
+    scenery: 'sea', // elementos 3D asociados al mar
     accent: '#3f8f7e',
   },
   {
@@ -66,13 +69,15 @@ export const GINS = [
     name: 'Gin de los Andes',
     kind: 'Gin de Frutos Azules',
     lead: 'La cordillera en la copa.',
-    desc: 'Un gin que mira hacia la montaña. En la etiqueta, la cordillera nevada y un racimo de arándanos con sus hojas.',
+    desc: 'Un gin que mira hacia la montaña. En la etiqueta, la cordillera nevada y un racimo de calafate con sus hojas.',
     facts: [['Estilo', 'Frutos azules'], ['Origen', 'Patagonia, Argentina']],
     img: '/product/andes.webp',
     imgAspect: 554 / 1100,
+    depth: { map: '/product/andes-depth.png', axis: 353.5, zmax: 188.5, w: 554, h: 1100 },
     tint: { a: [250, 246, 249], b: [234, 222, 234], glow: [190, 160, 205] },
-    botanicals: ['arandanos'],
-    scene: ['arandanos', 'arandanos', 'arandanos'],
+    botanicals: ['calafate'],
+    scene: ['calafate', 'calafate', 'calafate'],
+    scenery: 'ridges',
     accent: '#7b5a96',
   },
 ];
@@ -86,7 +91,7 @@ export const GINTONIC_STEPS = [
 export const SERVES = [
   { gin: 'Pampa', c: '#b8892f', t: 'Gin tonic clásico', d: 'Tónica, cáscara de limón y un toque de especias por encima.' },
   { gin: 'Cítrico & Mar', c: '#3f8f7e', t: 'Gin tonic cítrico', d: 'Tónica suave y una rodaja de limón bien fresca.' },
-  { gin: 'Gin de los Andes', c: '#7b5a96', t: 'Gin tonic de frutos azules', d: 'Tónica y unos arándanos, con hielo grande.' },
+  { gin: 'Gin de los Andes', c: '#7b5a96', t: 'Gin tonic de frutos azules', d: 'Tónica y unos frutos de calafate, con hielo grande.' },
 ];
 
 /* ── Tienda · precios de ejemplo ─────────────────────────── */
@@ -104,7 +109,7 @@ export const PRODUCTS = [
   {
     id: 'andes', cat: 'gin', name: 'Argentino de los Andes', sub: 'Gin de Frutos Azules · 750 ml', price: 26000,
     img: '/product/andes.webp', imgAspect: 554 / 1100, gin: 'andes', tag: 'Novedad',
-    long: 'Gin de frutos azules inspirado en la cordillera. Para disfrutar con tónica y unos arándanos.',
+    long: 'Gin de frutos azules inspirado en la cordillera. Para disfrutar con tónica y unos frutos de calafate.',
   },
   {
     id: 'trio', cat: 'combo', name: 'Trío Argentino', sub: 'Pampa + Cítrico & Mar + Andes', price: 69000, was: 74000,

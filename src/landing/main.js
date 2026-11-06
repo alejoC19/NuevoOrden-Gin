@@ -4,7 +4,7 @@ import Lenis from 'lenis';
 import { BRAND, GINS, BOTANICALS, GINTONIC_STEPS, SERVES } from '../shared/data.js';
 import { initCursor, initReveals, fillContact, clamp, ICONS } from '../shared/ui.js';
 import { Stage } from './stage.js';
-import { story, GO_U } from './timeline.js';
+import { story, cameraAt, GO_U } from './timeline.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -51,11 +51,37 @@ function measure() {
     heroH: el.hero.offsetHeight, ginsTop: top(el.gins), ginsH: el.gins.offsetHeight, pinH: pin.offsetHeight || innerHeight,
     origenTop: top(el.origen), expTop: top(el.exp), cierreTop: top(el.cierre), cierreH: el.cierre.offsetHeight, vh: innerHeight,
   };
-  if (!L || Object.keys(n).some((k) => Math.abs(n[k] - L[k]) > 1.5)) L = n;
+  const z = computeZones();
+  const changed = !L || Object.keys(n).some((k) => Math.abs(n[k] - L[k]) > 1.5) || JSON.stringify(z) !== JSON.stringify(zonesNow);
+  if (changed) { L = n; zonesNow = z; stage?.setZones(z); }
+}
+
+/* Zonas visuales: el espacio libre de texto donde viven la botella y los botánicos.
+   Se calculan a partir de las cajas reales de los textos, así nunca hay superposición. */
+let zonesNow = null;
+function computeZones() {
+  const W = innerWidth, H = el.pin.offsetHeight || innerHeight;
+  const navH = Math.round(navEl.offsetHeight || 64);
+  const portrait = W / H < 1.0;
+  const pinTop = pin.getBoundingClientRect().top;
+  const GAP = 36, RAIL = portrait ? 8 : 96;
+  const rnd = (o) => ({ x0: Math.round(o.x0), y0: Math.round(o.y0), x1: Math.round(o.x1), y1: Math.round(o.y1) });
+  const ch = panels.map((p) => {
+    p.style.setProperty('--dy', '0px');
+    const r = p.getBoundingClientRect();
+    const P = { left: r.left, right: r.right, top: r.top - pinTop, bottom: r.bottom - pinTop };
+    if (portrait) return rnd({ x0: 10, x1: W - 10, y0: navH + 4, y1: P.top + 26 });
+    // el lado del texto se decide por el centro del panel (no por su borde): vale para cualquier ancho de pantalla
+    return (P.left + P.right) / 2 > W / 2 ? rnd({ x0: 24, x1: P.left - GAP, y0: navH + 8, y1: H - 28 }) : rnd({ x0: P.right + GAP, x1: W - RAIL, y0: navH + 8, y1: H - 28 });
+  });
+  const hc = heroCopyEl;
+  const hr = { left: hc.offsetLeft, right: hc.offsetLeft + hc.offsetWidth, top: hc.offsetTop, bottom: hc.offsetTop + hc.offsetHeight };
+  const hero = portrait ? rnd({ x0: 10, x1: W - 10, y0: hr.bottom + 8, y1: H - 14 }) : rnd({ x0: Math.max(hr.right + 30, W * 0.5), x1: W - 60, y0: navH + 10, y1: H - 40 });
+  const finale = rnd({ x0: 16, x1: W - 16, y0: navH + 6, y1: Math.max(navH + 60, finCopyEl.offsetTop - 14) });
+  return { W, H, hero, ch, finale };
 }
 let measureT;
 const remeasure = () => { clearTimeout(measureT); measureT = setTimeout(measure, 120); };
-measure();
 
 /* ───────── escena 3D (un único canvas para toda la landing) ───────── */
 let stage = null;
@@ -86,17 +112,16 @@ const bgNow = { a: [253, 248, 238], b: [240, 224, 184], g: [233, 200, 118], gx: 
 let lastBgKey = '';
 const progItems = $$('#progress li');
 const navEl = $('#nav'), navShop = $('#navShop'), pbar = $('#pbar');
-const heroCopy = $('.hero-copy'), heroMark = $('.hero-mark'), cue = $('.cue');
+const heroCopyEl = $('.hero-copy'), finCopyEl = $('.f-copy');
+const heroCopy = heroCopyEl, heroMark = $('.hero-mark'), cue = $('.cue');
+measure();
 const finCopy = $('.f-copy');
-const parallax = $$('[data-parallax]');
-const inView = new Set();
-const pio = new IntersectionObserver((es) => es.forEach((e) => (e.isIntersecting ? inView.add(e.target) : inView.delete(e.target))), { rootMargin: '10% 0px' });
-parallax.forEach((p) => pio.observe(p));
 const panelState = GINS.map(() => ({ key: '', swap: 0 }));
 let progKey = '', introStart = 0, introDone = false, ready = false;
 const introV = { v: 0 };
+const smoothIn = (h) => { const t = clamp((h - 0.55) / 0.35); return t * t * (3 - 2 * t); };
 const mix3 = (A, B, t) => [lerp(A[0], B[0], t), lerp(A[1], B[1], t), lerp(A[2], B[2], t)];
-const stageState = { mode: 'story', h: 0, f: 0, reveal: [0, 0, 0], q: 0, intro: 0, t: 0, mx: 0, my: 0 };
+const stageState = { mode: 'story', h: 0, u: 0, f: 0, reveal: [0, 0, 0], q: 0, intro: 0, t: 0, mx: 0, my: 0, cam: { dm: 1, az: 0, el: 0.05 } };
 
 function updateBg(f, mode, screenX) {
   let A, B, G;
@@ -160,14 +185,15 @@ function frame(now) {
   // ── paneles de texto ──
   panels.forEach((p, i) => {
     const d = f - i;
-    const o = clamp(1 - Math.abs(d) * 2.6);
+    // el texto se apaga antes de que la botella entrante cruce su columna; el primero aparece cuando el hero ya se fue
+    const o = clamp(1 - Math.abs(d) * 5) * (i === 0 ? smoothIn(h) : 1);
     p.style.setProperty('--o', o.toFixed(3));
     p.style.setProperty('--dy', (d * -46).toFixed(1) + 'px');
     p.classList.toggle('live', o > 0.5);
     setBotanicals(i, GINS[i], reveal[i]);
   });
   const inGins = y < L.origenTop + 4;
-  const hf = clamp(1 - h * 1.7);
+  const hf = clamp(1 - h * 2.8);
   heroCopy.style.opacity = hf.toFixed(3);
   heroCopy.style.transform = `translate3d(0,${(-h * 60).toFixed(1)}px,0)`;
   heroMark.style.opacity = hf.toFixed(3);
@@ -182,13 +208,6 @@ function frame(now) {
   else if (y >= L.ginsTop - L.vh * 0.2) cur = GINS[Math.round(f)].id;
   if (cur !== progKey) { progKey = cur; progItems.forEach((li) => li.classList.toggle('on', li.dataset.s === cur)); }
 
-  // ── imágenes con parallax suave (solo las visibles) ──
-  inView.forEach((img) => {
-    const r = img.parentElement.getBoundingClientRect();
-    const k = (r.top + r.height / 2 - L.vh / 2) / L.vh;
-    img.style.transform = `translate3d(0,${(-k * 7).toFixed(2)}%,0)`;
-  });
-
   // ── escena 3D: solo se dibuja cuando se ve ──
   if (!stage || !ready) return;
   const cierreEnd = L.cierreTop + L.cierreH;
@@ -202,11 +221,11 @@ function frame(now) {
   }
   const s = stageState;
   s.mode = inGins ? 'story' : 'finale';
-  s.h = h; s.f = f; s.reveal = reveal; s.q = finaleQ; s.intro = introV.v; s.t = t; s.mx = mouse.x; s.my = mouse.y;
+  s.h = h; s.u = u; s.f = f; s.reveal = reveal; s.q = finaleQ; s.intro = introV.v; s.t = t; s.mx = mouse.x; s.my = mouse.y; s.cam = cameraAt(u);
   const t0 = performance.now();
   stage.render(s);
   stage.govern(performance.now() - t0 + 8);
-  updateBg(f, s.mode, s.mode === 'story' ? stage.cx / stage.Wv : 0);
+  updateBg(f, s.mode, stage.zx - 0.5);
 }
 
 /* ───────── arranque ───────── */
@@ -231,7 +250,7 @@ async function boot() {
   ldBar.style.width = '100%';
   measure();
   ready = !!stage;
-  if (stage) { stage.cx = 0; }
+  if (stage) stage.setZones(computeZones());
   requestAnimationFrame(() => {
     document.body.classList.add('ready');
     $('#loader').classList.add('done');
@@ -253,3 +272,6 @@ document.addEventListener('visibilitychange', () => { if (!document.hidden) reme
 
 requestAnimationFrame(frame);
 boot();
+
+// diagnóstico opcional para pruebas: /?debug
+if (location.search.includes('debug')) window.__ag = { get stage() { return stage; }, get L() { return L; }, panels, zones: () => zonesNow, state: stageState };

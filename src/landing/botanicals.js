@@ -81,10 +81,10 @@ function material(kind, hiQ) {
     case 'allspice': { const t = P({ base: [74, 46, 28], hi: [128, 88, 54], scale: 11, seed: 4 }); m = new THREE.MeshStandardMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 3, roughness: 0.9 }); break; }
     case 'angelica': { const t = P({ base: [160, 128, 80], hi: [208, 180, 128], scale: 4, stretch: [1, 9], seed: 5 }); m = new THREE.MeshStandardMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 4, roughness: 0.88 }); break; }
     case 'grains': { const t = P({ base: [52, 22, 12], hi: [112, 52, 28], scale: 8, seed: 6 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 1, roughness: 0.5, clearcoat: 0.15, clearcoatRoughness: 0.5, flatShading: true }); break; }
-    case 'lemon': { const t = P({ base: [232, 178, 28], hi: [252, 226, 100], scale: 20, oct: 3, seed: 7 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 2.2, roughness: 0.5, clearcoat: 0.35, clearcoatRoughness: 0.45, side: THREE.DoubleSide }); break; }
+    case 'lemon': { const t = P({ base: [246, 206, 52], hi: [255, 236, 128], scale: 20, oct: 3, seed: 7 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 2.2, roughness: 0.5, clearcoat: 0.35, clearcoatRoughness: 0.45, side: THREE.DoubleSide }); break; }
     case 'seaweed': { const t = P({ base: [34, 60, 34], hi: [116, 154, 66], scale: 3, stretch: [1, 6], seed: 8 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 1.4, roughness: 0.42, sheen: 0.8, sheenColor: new THREE.Color('#b6cf78'), side: THREE.DoubleSide }); break; }
-    case 'blueberry': { const t = P({ base: [36, 46, 104], hi: [138, 150, 200], scale: 6, contrast: 2.1, seed: 9 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 0.8, roughness: 0.55, sheen: 0.7, sheenColor: new THREE.Color('#c5cdf0') }); break; }
-    case 'leaf': { const map = leafTexture(hiQ ? 256 : 128); m = new THREE.MeshStandardMaterial({ map, roughness: 0.55, side: THREE.DoubleSide }); break; }
+    case 'calafate': { const t = P({ base: [30, 24, 70], hi: [118, 102, 172], scale: 7, contrast: 2.0, seed: 9 }); m = new THREE.MeshPhysicalMaterial({ map: t.map, bumpMap: t.bump, bumpScale: 0.8, roughness: 0.55, sheen: 0.7, sheenColor: new THREE.Color('#b9a8e0') }); break; }
+    case 'leaf': { const map = leafTexture(hiQ ? 256 : 128); m = new THREE.MeshStandardMaterial({ map, roughness: 0.5, side: THREE.DoubleSide, color: '#bcd6a0' }); break; }
     case 'dark': m = new THREE.MeshStandardMaterial({ color: '#171a3a', roughness: 0.6 }); break;
     default: m = new THREE.MeshStandardMaterial({ color: '#ccc' });
   }
@@ -217,7 +217,7 @@ const BUILD = {
       gg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); gg.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
       gg.setIndex(idx); gg.computeVertexNormals(); return gg;
     });
-    [[1.5, 0.13, 0.55, 0.13, 'a', [0, 0, 0]], [1.2, 0.1, 0.4, 0.11, 'b', [0.14, -0.08, 0.1]]].slice(0, hiQ ? 2 : 1).forEach(([t, R, H, W, s, p]) => {
+    [[1.15, 0.15, 0.5, 0.2, 'a', [0, 0, 0]], [0.9, 0.12, 0.36, 0.17, 'b', [0.16, -0.1, 0.1]]].slice(0, hiQ ? 2 : 1).forEach(([t, R, H, W, s, p]) => {
       const m = new THREE.Mesh(mk(t, R, H, W, s), material('lemon', hiQ)); m.position.set(...p); m.rotation.set(r() * 1.2, r() * 6, r() * 1.2); g.add(m);
     });
     return g;
@@ -225,7 +225,7 @@ const BUILD = {
   seaweed(hiQ, seed) {
     const g = new THREE.Group(), r = rng(seed);
     const mk = (s, L) => memo('sea' + hiQ + s, () => {
-      const p = new THREE.PlaneGeometry(0.2, L, hiQ ? 6 : 4, hiQ ? 40 : 22), a = p.attributes.position;
+      const p = new THREE.PlaneGeometry(0.34, L, hiQ ? 8 : 4, hiQ ? 40 : 22), a = p.attributes.position;
       for (let i = 0; i < a.count; i++) {
         const x = a.getX(i), y = a.getY(i), t = (y + L / 2) / L;
         const taper = 0.35 + 0.65 * Math.sin(Math.PI * Math.min(1, t * 1.08));
@@ -233,37 +233,45 @@ const BUILD = {
       }
       p.computeVertexNormals(); return p;
     });
-    [[1, 1.15, 0, 0], [2, 0.9, 0.12, 0.05], [3, 1.0, -0.12, -0.06]].slice(0, hiQ ? 3 : 2).forEach(([s, L, x, z]) => {
-      const m = new THREE.Mesh(mk(s, L), material('seaweed', hiQ)); m.position.set(x, 0, z); m.rotation.set(r() * 0.5, r() * 6, r() * 0.5); g.add(m);
+    [[1, 1.15, 0, 0], [2, 0.9, 0.2, 0.05], [3, 1.0, -0.2, -0.06]].slice(0, hiQ ? 3 : 2).forEach(([s, L, x, z]) => {
+      const m = new THREE.Mesh(mk(s, L), material('seaweed', hiQ)); m.position.set(x, 0, z); m.rotation.set((r() - 0.5) * 0.3, (r() - 0.5) * 0.9, (r() - 0.5) * 0.3); g.add(m);
     });
     return g;
   },
-  blueberry(hiQ, seed) {
+  calafate(hiQ, seed) {
     const g = new THREE.Group(), r = rng(seed);
-    const geo = memo('blu' + hiQ, () => roughSphere(0.14, hiQ ? 30 : 18, hiQ ? 22 : 12, 0.04, 8, 9));
-    const crown = memo('bluc', () => new THREE.TorusGeometry(0.038, 0.012, 6, 5));
-    for (const p of scatter(0.3, hiQ ? 6 : 4, seed, 0.25)) {
-      const m = new THREE.Mesh(geo, material('blueberry', hiQ)); m.position.copy(p); randRot(m, r);
-      const c = new THREE.Mesh(crown, material('dark', hiQ)); c.position.set(0, 0.132, 0); c.rotation.x = Math.PI / 2; m.add(c);
+    const geo = memo('cal' + hiQ, () => roughSphere(0.085, hiQ ? 28 : 16, hiQ ? 20 : 12, 0.04, 8, 9));
+    const crown = memo('calc', () => new THREE.TorusGeometry(0.024, 0.008, 6, 5));
+    for (const p of scatter(0.28, hiQ ? 9 : 6, seed, 0.17)) {
+      const m = new THREE.Mesh(geo, material('calafate', hiQ)); m.position.copy(p); randRot(m, r);
+      const c = new THREE.Mesh(crown, material('dark', hiQ)); c.position.set(0, 0.082, 0); c.rotation.x = Math.PI / 2; m.add(c);
       g.add(m);
     }
+    // hojas pequeñas y coriáceas del calafate, con la punta espinosa
     const leaf = memo('leaf' + hiQ, () => {
-      const s = new THREE.Shape(); s.moveTo(0, 0); s.bezierCurveTo(0.14, 0.06, 0.12, 0.3, 0, 0.42); s.bezierCurveTo(-0.12, 0.3, -0.14, 0.06, 0, 0);
+      const s = new THREE.Shape(); s.moveTo(0, 0); s.bezierCurveTo(0.09, 0.03, 0.1, 0.18, 0.05, 0.25); s.lineTo(0.02, 0.3); s.lineTo(0, 0.26); s.lineTo(-0.02, 0.3); s.lineTo(-0.05, 0.25); s.bezierCurveTo(-0.1, 0.18, -0.09, 0.03, 0, 0);
       const l = new THREE.ShapeGeometry(s, 10); const p = l.attributes.position, uv = l.attributes.uv;
-      for (let i = 0; i < p.count; i++) { uv.setXY(i, p.getX(i) / 0.28 + 0.5, p.getY(i) / 0.42); p.setZ(i, p.getX(i) ** 2 * 2.8 + p.getY(i) * 0.1); }
+      for (let i = 0; i < p.count; i++) { uv.setXY(i, p.getX(i) / 0.2 + 0.5, p.getY(i) / 0.3); p.setZ(i, p.getX(i) ** 2 * 3.5 + p.getY(i) * 0.1); }
       l.computeVertexNormals(); return l;
     });
-    for (let i = 0; i < (hiQ ? 4 : 3); i++) {
+    for (let i = 0; i < (hiQ ? 6 : 4); i++) {
       const m = new THREE.Mesh(leaf, material('leaf', hiQ)); m.position.set((r() - 0.5) * 0.5, (r() - 0.5) * 0.5, (r() - 0.5) * 0.4); m.rotation.set(r() * 3, r() * 6, r() * 3); m.scale.setScalar(0.9 + r() * 0.5); g.add(m);
     }
     return g;
   },
 };
 
-/** Crea el grupo 3D de un botánico. `hiQ` = calidad alta (escritorio). */
+/** Crea un botánico listo para la escena: centrado en su caja y con su radio medido (userData.radius). */
 export function createIngredient(kind, hiQ, seed = 1) {
-  const g = (BUILD[kind] || BUILD.juniper)(hiQ, seed);
-  g.userData.size = { seaweed: 1.7, lemon: 1.25, angelica: 1.1, cardamom: 1.1 }[kind] || 1;
-  g.userData.spin = new THREE.Vector3((Math.random() - 0.5) * 0.5, 0.25 + Math.random() * 0.35, (Math.random() - 0.5) * 0.3);
+  const inner = (BUILD[kind] || BUILD.juniper)(hiQ, seed);
+  const box = new THREE.Box3().setFromObject(inner), c = box.getCenter(new THREE.Vector3());
+  inner.position.sub(c);
+  const g = new THREE.Group();
+  g.add(inner);
+  g.userData.radius = Math.max(0.05, box.getSize(new THREE.Vector3()).length() / 2);
+  g.userData.flat = kind === 'seaweed' || kind === 'lemon';
+  const r = rng(seed * 7 + 3);
+  g.userData.spin = new THREE.Vector3((r() - 0.5) * 0.5, 0.2 + r() * 0.3, (r() - 0.5) * 0.3);
+  g.userData.drift = { f: [0.5 + r() * 0.5, 0.4 + r() * 0.5, 0.35 + r() * 0.4], p: [r() * 6.28, r() * 6.28, r() * 6.28], a: [0.05 + r() * 0.04, 0.06 + r() * 0.05, 0.05 + r() * 0.04] };
   return g;
 }
