@@ -23,6 +23,10 @@ export function initCursor() {
 export function initReveals(root = document) {
   const els = [...root.querySelectorAll('.reveal:not(.in)')];
   if (!els.length) return;
+  if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('in')); return; }
+  // seguro: si por cualquier motivo el observador no marca algo que ya está en pantalla, se revela igual
+  const safety = () => els.forEach((el) => { if (el.classList.contains('in')) return; const r = el.getBoundingClientRect(); if (r.top < innerHeight * 0.92 && r.bottom > 0) el.classList.add('in'); });
+  setInterval(safety, 700);
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
   els.forEach((el) => io.observe(el));
 }
