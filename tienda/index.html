@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tienda · Argentino Gin</title>
+  <meta name="description" content="Tienda oficial de Argentino Gin: Pampa, Cítrico & Mar y Gin de los Andes. Comprá online y coordiná el pedido por WhatsApp." />
+  <meta name="theme-color" content="#f6ecd5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rye&family=IM+Fell+English:ital@0;1&family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23f6ecd5'/%3E%3Cpath d='M27 8h10v10l6 10v26a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V28l6-10z' fill='none' stroke='%23b8892f' stroke-width='3'/%3E%3C/svg%3E" />
+</head>
+<body class="shop-page has-cursor">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><b></b><i></i></div>
+
+  <header class="nav scrolled" id="nav">
+    <a class="brand keep" href="/" aria-label="Argentino Gin, volver al inicio">ARGENTINO<small>GIN</small></a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="/">Inicio</a>
+      <a href="/#origen">Historia</a>
+      <a href="#catalogo" class="on">Colección</a>
+      <button class="cart-btn keep" id="cartBtn" aria-label="Abrir carrito">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg>
+        <span>Carrito</span><b id="cartCount">0</b>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="s-hero">
+      <div class="s-copy">
+        <p class="eyebrow">Tienda oficial</p>
+        <h1 class="display gold-text">La colección Argentino</h1>
+        <p class="lead">Gin artesanal de autor, destilado y embotellado en la Patagonia.</p>
+        <p class="age">Venta exclusiva a mayores de 18 años</p>
+      </div>
+      <img class="s-trio" src="/product/trio.webp" alt="Las tres botellas de Argentino Gin: Pampa, Cítrico & Mar y Gin de los Andes" width="1712" height="1039" fetchpriority="high" />
+    </section>
+
+    <section id="catalogo" class="catalog">
+      <div class="c-head">
+        <h2 class="display h2">Elegí tu gin</h2>
+        <div class="filters" id="filters" role="tablist" aria-label="Filtrar productos">
+          <button class="on" data-f="all" role="tab">Todos</button>
+          <button data-f="gin" role="tab">Gines</button>
+          <button data-f="combo" role="tab">Combos</button>
+        </div>
+      </div>
+      <div class="ship-note" id="shipNote"></div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="perks">
+      <div><b>Envío gratis</b><span id="perkShip"></span></div>
+      <div><b>Cuotas sin interés</b><span id="perkCuotas"></span></div>
+      <div><b>Regalo listo</b><span>El Trío Argentino, para sorprender</span></div>
+      <div><b>Atención directa</b><span>Pedí y consultá por WhatsApp</span></div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacto">
+    <div class="f-top">
+      <div class="f-mark gold-text">ARGENTINO<small>GIN DE AUTOR</small></div>
+      <div class="f-col"><h4>Explorar</h4><a href="/">Inicio</a><a href="/#gins">Los gines</a><a href="/#origen">Historia</a><a href="/#experiencia">Experiencia</a></div>
+      <div class="f-col" id="fContact"><h4>Contacto</h4></div>
+    </div>
+    <div class="f-legal">
+      <span><strong>Venta exclusiva a mayores de 18 años.</strong> Beber con moderación. El exceso de alcohol es perjudicial para la salud.</span>
+      <span id="copy">© 2026 Argentino Gin</span>
+    </div>
+  </footer>
+
+  <!-- ficha individual -->
+  <div class="sheet" id="sheet" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ficha del producto"></div>
+
+  <!-- carrito -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Carrito">
+    <div class="dr-head"><h3 class="display">Tu carrito</h3><button id="cartClose" aria-label="Cerrar carrito">✕</button></div>
+    <div class="ship"><p id="shipTxt"></p><div class="bar"><i id="shipBar"></i></div></div>
+    <div class="dr-list" id="drList"></div>
+    <div class="dr-foot">
+      <div class="row"><span>Subtotal</span><b id="drSub">$0</b></div>
+      <p class="small" id="drCuotas"></p>
+      <label class="age-check"><input type="checkbox" id="ageOk" /> <span>Declaro ser mayor de 18 años.</span></label>
+      <button class="btn btn-gold wide" id="checkout" disabled>Finalizar pedido por WhatsApp</button>
+      <p class="small">Coordinamos el pago y el envío por WhatsApp.</p>
+    </div>
+  </aside>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script type="module" src="/src/shop/shop.js"></script>
+</body>
+</html>
