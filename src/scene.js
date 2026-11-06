@@ -5,6 +5,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { createBottle } from './bottle.js';
 import { makeWordTexture, DISPLAY } from './labels.js';
+import { BRAND } from './data.js';
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -138,8 +139,9 @@ export class Stage {
       c.globalAlpha = 0.16; c.fillStyle = g; c.fillText(txt, w / 2, y);
       c.globalAlpha = 1; c.strokeStyle = g; c.lineWidth = size * 0.012; c.strokeText(txt, w / 2, y);
     };
-    if (two) { draw('NUEVO', h * 0.28, h * 0.4); draw('ORDEN', h * 0.72, h * 0.4); }
-    else draw('NUEVO ORDEN', h / 2, h * 0.86);
+    const words = BRAND.hero.split(' ');
+    if (two && words.length > 1) { draw(words[0], h * 0.28, h * 0.4); draw(words.slice(1).join(' '), h * 0.72, h * 0.4); }
+    else draw(BRAND.hero, h / 2, h * 0.86);
     const t = new THREE.CanvasTexture(cv);
     t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
     return t;

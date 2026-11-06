@@ -4,10 +4,13 @@
 //  (también .jpeg .png .webp). Si no existe, el sitio usa un
 //  render 3D de la botella como reemplazo.
 // ─────────────────────────────────────────────────────────────
-export const IG_URL = 'https://www.instagram.com/nuevoordengin/';
-export const IG_HANDLE = '@nuevoordengin';
+// MARCA (placeholder): cambia el nombre aca y se actualiza todo el sitio
+export const BRAND = { name: 'Ébano', full: 'Ébano Gin', hero: 'ÉBANO GIN' };
+// Redes y contacto: dejalos vacios para ocultarlos
+export const IG_URL = '';
+export const IG_HANDLE = '';
 // Número de WhatsApp donde llegan los pedidos (código país + área + número, sin + ni espacios)
-export const WA_NUMBER = '5491100000000';
+export const WA_NUMBER = ''; // ej: '5491155551234'
 export const FREE_SHIP_FROM = 60000; // ARS · envío gratis a partir de
 export const INSTALLMENTS = 3; // cuotas sin interés que se muestran
 
@@ -19,7 +22,7 @@ export const BOTTLES = [
     kind: 'London Dry Gin',
     tagline: 'El que rompió el molde.',
     desc:
-      'Enebro firme, cítricos limpios y un final seco que no pide permiso. La base de todo el nuevo orden: simple, directo y imposible de olvidar.',
+      'Enebro firme, cítricos limpios y un final seco que no pide permiso. La base de toda la colección: simple, directo y imposible de olvidar.',
     notes: ['Enebro', 'Cilantro', 'Cáscara de limón'],
     serve: 'Gin & tonic · rodaja de limón · mucho hielo',
     abv: 43,
@@ -123,10 +126,10 @@ export const PROCESS = [
 //  Foto real → /public/photos/<id>.jpg
 // ─────────────────────────────────────────────────────────────
 export const PRODUCTS = [
-  { id: 'clasico', cat: 'gin', name: 'Nuevo Orden Clásico', sub: 'London Dry · 700 ml · 43%', price: 22000, shot: [0], bottle: 0, tag: 'Más vendido' },
-  { id: 'citrico', cat: 'gin', name: 'Nuevo Orden Cítrico', sub: 'Citrus Gin · 700 ml · 40%', price: 23500, shot: [1], bottle: 1 },
-  { id: 'rosa', cat: 'gin', name: 'Nuevo Orden Rosa', sub: 'Pink Gin · 700 ml · 40%', price: 23500, shot: [2], bottle: 2, tag: 'Novedad' },
-  { id: 'noche', cat: 'gin', name: 'Nuevo Orden Noche', sub: 'Reserva Oscura · 700 ml · 46%', price: 29000, shot: [3], bottle: 3, tag: 'Edición limitada' },
+  { id: 'clasico', cat: 'gin', name: `${BRAND.name} Clásico`, sub: 'London Dry · 700 ml · 43%', price: 22000, shot: [0], bottle: 0, tag: 'Más vendido' },
+  { id: 'citrico', cat: 'gin', name: `${BRAND.name} Cítrico`, sub: 'Citrus Gin · 700 ml · 40%', price: 23500, shot: [1], bottle: 1 },
+  { id: 'rosa', cat: 'gin', name: `${BRAND.name} Rosa`, sub: 'Pink Gin · 700 ml · 40%', price: 23500, shot: [2], bottle: 2, tag: 'Novedad' },
+  { id: 'noche', cat: 'gin', name: `${BRAND.name} Noche`, sub: 'Reserva Oscura · 700 ml · 46%', price: 29000, shot: [3], bottle: 3, tag: 'Edición limitada' },
   { id: 'duo', cat: 'combo', name: 'Dúo Clásico + Cítrico', sub: '2 botellas · 700 ml c/u', price: 42000, was: 45500, shot: [0, 1], tag: 'Combo' },
   { id: 'coleccion', cat: 'combo', name: 'Colección Completa', sub: 'Las 4 botellas · caja regalo', price: 89000, was: 98000, shot: [0, 1, 2, 3], tag: 'Regalo' },
 ];

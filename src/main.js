@@ -2,7 +2,7 @@ import './style.css';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { Stage } from './scene.js';
-import { BOTTLES, PRODUCTS, PROCESS, IG_URL, IG_HANDLE, WA_NUMBER, FREE_SHIP_FROM, INSTALLMENTS } from './data.js';
+import { BRAND, BOTTLES, PRODUCTS, PROCESS, IG_URL, WA_NUMBER, FREE_SHIP_FROM, INSTALLMENTS } from './data.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -12,13 +12,17 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const BASE = import.meta.env.BASE_URL;
 
 /* ── enlaces ── */
-['igLink', 'igLink2', 'igBtn'].forEach((id) => ($('#' + id).href = IG_URL));
-$('#waLink').href = `https://wa.me/${WA_NUMBER}`;
+document.title = `${BRAND.full} · Tienda oficial`;
+$$('.logo').forEach((l) => (l.innerHTML = `<b>${BRAND.name.toUpperCase()}</b><em>GIN</em>`));
+$$('.ld-word span').forEach((s, i) => (s.textContent = i ? 'GIN' : BRAND.name.toUpperCase()));
+$('#copy').textContent = `© 2026 ${BRAND.full}`;
+['igLink', 'igLink2', 'igBtn'].forEach((id) => { const a = $('#' + id); IG_URL ? (a.href = IG_URL) : (a.style.display = 'none'); });
+WA_NUMBER ? ($('#waLink').href = `https://wa.me/${WA_NUMBER}`) : ($('#waLink').style.display = 'none');
 $('#perkShip').textContent = `En compras desde ${money(FREE_SHIP_FROM)}`;
 $('#perkCuotas').textContent = `Hasta ${INSTALLMENTS} cuotas con tarjeta`;
-const announceMsg = `Envío gratis desde ${money(FREE_SHIP_FROM)} · ${INSTALLMENTS} cuotas sin interés · Retiro y envíos a todo el país · ${IG_HANDLE}`;
+const announceMsg = `Envío gratis desde ${money(FREE_SHIP_FROM)} · ${INSTALLMENTS} cuotas sin interés · Retiro y envíos a todo el país`;
 $('#announce .mq').innerHTML = Array(8).fill(`<span>${announceMsg}</span>`).join('');
-$('#marquee .mq-t').innerHTML = Array(10).fill('<span>Nuevo Orden</span><span>Gin de autor</span>').join('');
+$('#marquee .mq-t').innerHTML = Array(10).fill(`<span>${BRAND.name}</span><span>Gin de autor</span>`).join('');
 $('#shipNote').innerHTML = `🚚 <b>Envío gratis</b> en compras desde ${money(FREE_SHIP_FROM)} · Pagá en <b>${INSTALLMENTS} cuotas sin interés</b> · Coordinamos por WhatsApp`;
 
 /* ── fotos reales (public/photos/<id>.jpg|jpeg|png|webp) ── */
@@ -58,7 +62,7 @@ BOTTLES.forEach((b, i) => {
       <div class="price">${money(p.price)}</div>
       <button class="btn solid" data-add="${p.id}" data-cursor>Agregar al carrito</button>
     </div>
-    <img class="ch-photo" alt="Foto real de Nuevo Orden ${b.name}" />`;
+    <img class="ch-photo" alt="Foto real de ${BRAND.name} ${b.name}" />`;
   pin.appendChild(el);
   findPhoto(b.id).then((u) => {
     if (!u) return;
@@ -98,7 +102,7 @@ function renderCart() {
         const p = prod(l.id);
         return `<div class="li"><img src="${renders[l.id] || ''}" alt="" /><div><h4>${p.name}</h4><small>${p.sub}</small><div class="qty"><button data-dec="${l.id}" aria-label="Menos">−</button><span>${l.q}</span><button data-inc="${l.id}" aria-label="Más">+</button></div><button class="rm" data-rm="${l.id}">Quitar</button></div><b>${money(p.price * l.q)}</b></div>`;
       }).join('')
-    : `<div class="empty">Tu carrito está vacío.<br/>Elegí una botella y empezá el nuevo orden.</div>`;
+    : `<div class="empty">Tu carrito está vacío.<br/>Elegí una botella y empezá tu pedido.</div>`;
   const t = total();
   $('#drSub').textContent = money(t);
   $('#drCuotas').textContent = t ? `o ${INSTALLMENTS} cuotas de ${money(t / INSTALLMENTS)} sin interés` : '';
@@ -136,7 +140,7 @@ document.addEventListener('click', (e) => {
   else if (t.dataset.dec) { const l = cart.find((x) => x.id === t.dataset.dec); l.q--; if (l.q <= 0) cart = cart.filter((x) => x !== l); save(); renderCart(); }
   else if (t.dataset.rm) { cart = cart.filter((l) => l.id !== t.dataset.rm); save(); renderCart(); }
   else if (t.dataset.go) { lenis.scrollTo(L.bottles + (L.bottlesH - innerHeight) * (+t.dataset.go / 3), { duration: 2 }); }
-  else if (t.dataset.wa) { const p = prod(t.dataset.wa); window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hola Nuevo Orden! Quiero comprar: 1 x ${p.name} (${money(p.price)})`)}`, '_blank'); }
+  else if (t.dataset.wa) { const p = prod(t.dataset.wa); window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hola! Quiero comprar: 1 x ${p.name} (${money(p.price)})`)}`, '_blank'); }
   else if (t.matches('a[href^="#"]')) {
     const target = $(t.getAttribute('href'));
     if (target) { e.preventDefault(); lenis ? lenis.scrollTo(t.getAttribute('href') === '#top' ? 0 : target, { duration: 2.2, offset: 0 }) : target.scrollIntoView(); }
@@ -147,7 +151,7 @@ $('#cartClose').onclick = $('#scrim').onclick = () => openCart(false);
 addEventListener('keydown', (e) => e.key === 'Escape' && openCart(false));
 $('#checkout').onclick = () => {
   const lines = cart.map((l) => `• ${l.q} x ${prod(l.id).name} — ${money(prod(l.id).price * l.q)}`).join('\n');
-  const msg = `Hola Nuevo Orden! Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${money(total())}\n\n¿Cómo seguimos con el pago y el envío?`;
+  const msg = `Hola! Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${money(total())}\n\n¿Cómo seguimos con el pago y el envío?`;
   window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
 };
 $('#news').onsubmit = (e) => { e.preventDefault(); $('#newsMsg').textContent = '¡Listo! Te sumamos a la lista.'; e.target.reset(); };
@@ -231,7 +235,7 @@ async function boot() {
 
 function buildGrid() {
   $('#grid').innerHTML = PRODUCTS.map((p) => `
-    <article class="card rv" data-cat="${p.cat}">
+    <article class="card rv" data-cat="${p.cat}" style="--c:${BOTTLES[p.bottle]?.accent || '#e6c378'}">
       ${p.tag ? `<span class="badge">${p.tag}</span>` : ''}
       <span class="ship-b">Envío gratis*</span>
       <div class="ph ${p.imgB ? 'two' : ''}">

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { BRAND } from './data.js';
 
 const TAU = Math.PI * 2;
 export const DISPLAY = '"Bodoni Moda", "Playfair Display", Georgia, serif';
@@ -132,7 +133,7 @@ export function makeLabel(v, aspect) {
     set('foil');
     ctx.font = `700 ${H * 0.085}px ${DISPLAY}`;
     ctx.textBaseline = 'alphabetic';
-    spaced(ctx, 'NUEVO ORDEN', cx, H * 0.2, H * 0.03);
+    spaced(ctx, BRAND.name.toUpperCase(), cx, H * 0.2, H * 0.03);
     ctx.font = `500 ${H * 0.04}px ${DISPLAY}`;
     spaced(ctx, 'G  I  N  ·  D  E  S  T  I  L  A  D  O  ·  A  R  T  E  S  A  N  A  L', cx, H * 0.255, 4);
 
