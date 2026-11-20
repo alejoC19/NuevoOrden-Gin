@@ -97,6 +97,9 @@ func _current_action() -> Dictionary:
 	var point := _nearest_in_group(&"delivery_point")
 	if point != null:
 		return {"text": "[E] Entregar caja", "run": _do_deliver.bind(point)}
+	var station := _nearest_in_group(&"fuel_station")
+	if station != null:
+		return {"text": "[E] Reparar camión ($%d)" % Truck.REPAIR_COST, "run": _do_repair}
 	return {}
 
 
@@ -107,6 +110,7 @@ func _update_prompt() -> void:
 
 func interact() -> void:
 	if driving_truck != null:
+		driving_truck.try_refuel()
 		return
 	var action: Dictionary = _current_action()
 	if not action.is_empty():
@@ -142,10 +146,19 @@ func _do_deliver(point: Area3D) -> void:
 		GameState.post_message("Este punto ya recibió una entrega")
 		return
 	truck.remove_cargo()
+	truck.register_delivery()
 	delivery.mark_completed()
 	GameState.add_money(DeliveryPoint.REWARD)
 	GameState.register_delivery()
 	GameState.post_message("Entrega completada +$%d" % DeliveryPoint.REWARD)
+
+
+func _do_repair() -> void:
+	var truck := _nearest_truck()
+	if truck == null:
+		GameState.post_message("Acercá el camión a la estación")
+		return
+	truck.repair()
 
 
 # --- Vehicle -----------------------------------------------------------------

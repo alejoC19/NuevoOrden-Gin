@@ -14,6 +14,7 @@ func _ready() -> void:
 	_build_cargo_pickup()
 	_build_delivery_point()
 	_build_warehouse()
+	_build_fuel_station()
 	_build_truck()
 	_build_player()
 	_build_hud()
@@ -177,6 +178,17 @@ func _build_delivery_point() -> void:
 	var post := Node3D.new()
 	_add(root, post, "Visual")
 	_mesh(post, "Post", _box(Vector3(0.25, 3.0, 0.25)), _mat(Color(0.3, 0.3, 0.32), 0.5, 0.8), Vector3(0, 1.5, 0))
+	var beacon_mat := StandardMaterial3D.new()
+	beacon_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	beacon_mat.albedo_color = Color(0.2, 0.9, 0.35, 0.25)
+	beacon_mat.emission_enabled = true
+	beacon_mat.emission = Color(0.2, 0.9, 0.35)
+	beacon_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	var beacon_mesh := CylinderMesh.new()
+	beacon_mesh.top_radius = 0.6
+	beacon_mesh.bottom_radius = 0.6
+	beacon_mesh.height = 80.0
+	_mesh(post, "Beacon", beacon_mesh, beacon_mat, Vector3(0, 40, 0))
 	var sign_label := Label3D.new()
 	sign_label.text = "ENTREGA"
 	sign_label.font_size = 96
@@ -191,6 +203,7 @@ func _build_delivery_point() -> void:
 func _build_warehouse() -> void:
 	var root := Node3D.new()
 	root.name = "Warehouse"
+	root.add_to_group("warehouse", true)
 	var concrete := _mat(Color(0.62, 0.62, 0.6), 0.9)
 	var metal := _mat(Color(0.35, 0.4, 0.45), 0.5, 0.8)
 	var structure := Node3D.new()
@@ -216,6 +229,48 @@ func _build_warehouse() -> void:
 	sign_label.position = Vector3(0, 5.6, 6.4)
 	_add(root, sign_label, "Sign")
 	_save(root, "res://world/warehouse.tscn")
+
+
+func _build_fuel_station() -> void:
+	var root := Area3D.new()
+	root.name = "FuelStation"
+	root.collision_layer = LAYER_INTERACT
+	root.collision_mask = 0
+	root.add_to_group("fuel_station", true)
+	var cs := CollisionShape3D.new()
+	var shape := CylinderShape3D.new()
+	shape.radius = 6.0
+	shape.height = 4.0
+	cs.shape = shape
+	cs.position = Vector3(0, 2.0, 0)
+	_add(root, cs, "CollisionShape3D")
+	var visual := Node3D.new()
+	_add(root, visual, "Visual")
+	var red := _mat(Color(0.75, 0.15, 0.12), 0.5, 0.3)
+	var steel := _mat(Color(0.55, 0.58, 0.6), 0.4, 0.9)
+	_mesh(visual, "Island", _box(Vector3(2.0, 0.3, 8.0)), _mat(Color(0.6, 0.6, 0.58), 0.9), Vector3(0, 0.15, 0))
+	_mesh(visual, "PumpA", _box(Vector3(0.7, 1.6, 0.7)), red, Vector3(0, 1.1, -2.0))
+	_mesh(visual, "PumpB", _box(Vector3(0.7, 1.6, 0.7)), red, Vector3(0, 1.1, 2.0))
+	_mesh(visual, "CanopyRoof", _box(Vector3(5.0, 0.3, 9.0)), steel, Vector3(0, 4.6, 0))
+	for z in [-4.0, 4.0]:
+		_mesh(visual, "Pillar", _box(Vector3(0.3, 4.5, 0.3)), steel, Vector3(0, 2.25, z))
+	var body := StaticBody3D.new()
+	body.collision_layer = LAYER_WORLD
+	body.collision_mask = 0
+	_add(body, _make_shape_box(Vector3(0.9, 1.6, 0.9)), "PumpACollision")
+	(body.get_node("PumpACollision") as Node3D).position = Vector3(0, 0.8, -2.0)
+	_add(body, _make_shape_box(Vector3(0.9, 1.6, 0.9)), "PumpBCollision")
+	(body.get_node("PumpBCollision") as Node3D).position = Vector3(0, 0.8, 2.0)
+	_add(root, body, "PumpBody")
+	var sign_label := Label3D.new()
+	sign_label.text = "NAFTA\nE: cargar (camión)\nReparación $20 (a pie)"
+	sign_label.font_size = 72
+	sign_label.pixel_size = 0.01
+	sign_label.outline_size = 20
+	sign_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	sign_label.position = Vector3(0, 6.6, 0)
+	_add(root, sign_label, "Sign")
+	_save(root, "res://world/fuel_station.tscn")
 
 
 func _build_truck() -> void:
@@ -286,6 +341,16 @@ func _build_truck() -> void:
 	seat_cs.shape = seat_shape
 	_add(seat, seat_cs, "CollisionShape3D")
 	_add(root, seat, "DriverSeat")
+	var tarea := Area3D.new()
+	tarea.collision_layer = 0
+	tarea.collision_mask = LAYER_INTERACT
+	tarea.position = Vector3(0, 1.0, 0)
+	var tcs := CollisionShape3D.new()
+	var tshape := SphereShape3D.new()
+	tshape.radius = 4.0
+	tcs.shape = tshape
+	_add(tarea, tcs, "CollisionShape3D")
+	_add(root, tarea, "InteractArea")
 	var exit_marker := Marker3D.new()
 	exit_marker.position = Vector3(-3.0, 0.3, -1.6)
 	_add(root, exit_marker, "ExitMarker")
@@ -345,28 +410,81 @@ func _build_hud() -> void:
 	var C := HORIZONTAL_ALIGNMENT_CENTER
 	var R := HORIZONTAL_ALIGNMENT_RIGHT
 	_label(ctrl, "MoneyLabel", "Dinero: $0", Vector4(0, 0, 0, 0), Vector4(20, 14, 320, 54), L, 30)
-	_label(ctrl, "ObjectiveLabel", "", Vector4(1, 0, 1, 0), Vector4(-520, 14, -20, 54), R, 22)
+	_label(ctrl, "ObjectiveLabel", "", Vector4(1, 0, 1, 0), Vector4(-620, 14, -20, 54), R, 22)
+	_label(ctrl, "DistanceLabel", "", Vector4(1, 0, 1, 0), Vector4(-620, 54, -20, 90), R, 20)
 	_label(ctrl, "MessageLabel", "", Vector4(0.5, 0, 0.5, 0), Vector4(-400, 90, 400, 140), C, 28)
-	_label(ctrl, "CargoLabel", "Carga: 0/3", Vector4(0, 1, 0, 1), Vector4(20, -64, 320, -20), L, 28)
 	_label(ctrl, "PromptLabel", "", Vector4(0.5, 1, 0.5, 1), Vector4(-300, -150, 300, -100), C, 26)
+	# Truck panel (only visible while driving).
+	var panel := VBoxContainer.new()
+	panel.anchor_top = 1.0
+	panel.anchor_bottom = 1.0
+	panel.offset_left = 20
+	panel.offset_top = -250
+	panel.offset_right = 340
+	panel.offset_bottom = -20
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_add(ctrl, panel, "TruckPanel")
+	_panel_label(panel, "SpeedLabel", "Velocidad: 0 km/h")
+	_panel_label(panel, "CargoLabel", "Carga: 0/3")
+	_panel_label(panel, "FuelLabel", "Nafta: 100%")
+	_panel_bar(panel, "FuelBar", Color(1.0, 0.7, 0.15))
+	_panel_label(panel, "WearLabel", "Desgaste: 0%")
+	_panel_bar(panel, "WearBar", Color(0.9, 0.3, 0.25))
 	_save(root, "res://ui/hud.tscn")
 
 
+func _panel_label(parent: Node, node_name: String, text: String) -> Label:
+	var l := Label.new()
+	l.text = text
+	l.add_theme_font_size_override("font_size", 24)
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 8)
+	_add(parent, l, node_name)
+	return l
+
+
+func _panel_bar(parent: Node, node_name: String, color: Color) -> ProgressBar:
+	var bar := ProgressBar.new()
+	bar.min_value = 0
+	bar.max_value = 100
+	bar.value = 0
+	bar.show_percentage = false
+	bar.custom_minimum_size = Vector2(300, 14)
+	bar.modulate = color
+	_add(parent, bar, node_name)
+	return bar
+
+
+func _static_cylinder(parent: Node, node_name: String, pos: Vector3, mesh: CylinderMesh, mat: Material) -> StaticBody3D:
+	var sb := StaticBody3D.new()
+	sb.position = pos
+	sb.collision_layer = LAYER_WORLD
+	sb.collision_mask = 0
+	var cs := CollisionShape3D.new()
+	var shape := CylinderShape3D.new()
+	shape.radius = maxf(mesh.top_radius, mesh.bottom_radius)
+	shape.height = mesh.height
+	cs.shape = shape
+	_add(sb, cs, "CollisionShape3D")
+	_mesh(sb, "Visual", mesh, mat)
+	_add(parent, sb, node_name)
+	return sb
+
+
 func _build_world() -> void:
+	var half: float = 500.0  # ground is 1000 x 1000 so a delivery trip takes a while
 	var root := Node3D.new()
 	root.name = "World"
 	root.set_script(load("res://world/world.gd"))
 
-	# Ground (100 x 100) and perimeter walls.
-	var ground := _static_box(root, "Ground", Vector3(0, -0.5, 0), Vector3(100, 1, 100), _mat(Color(0.36, 0.4, 0.3), 0.95))
+	var ground := _static_box(root, "Ground", Vector3(0, -0.5, 0), Vector3(half * 2, 1, half * 2), _mat(Color(0.36, 0.4, 0.3), 0.95))
 	ground.add_to_group("ground", true)
 	var wall_mat := _mat(Color(0.5, 0.5, 0.5), 0.9)
-	_static_box(root, "WallN", Vector3(0, 1, -50.5), Vector3(102, 2, 1), wall_mat)
-	_static_box(root, "WallS", Vector3(0, 1, 50.5), Vector3(102, 2, 1), wall_mat)
-	_static_box(root, "WallW", Vector3(-50.5, 1, 0), Vector3(1, 2, 100), wall_mat)
-	_static_box(root, "WallE", Vector3(50.5, 1, 0), Vector3(1, 2, 100), wall_mat)
+	_static_box(root, "WallN", Vector3(0, 1, -half - 0.5), Vector3(half * 2 + 2, 2, 1), wall_mat)
+	_static_box(root, "WallS", Vector3(0, 1, half + 0.5), Vector3(half * 2 + 2, 2, 1), wall_mat)
+	_static_box(root, "WallW", Vector3(-half - 0.5, 1, 0), Vector3(1, 2, half * 2), wall_mat)
+	_static_box(root, "WallE", Vector3(half + 0.5, 1, 0), Vector3(1, 2, half * 2), wall_mat)
 
-	# Environment + light.
 	var we := WorldEnvironment.new()
 	var env := Environment.new()
 	env.background_mode = Environment.BG_SKY
@@ -380,9 +498,9 @@ func _build_world() -> void:
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-50, -30, 0)
 	sun.shadow_enabled = true
+	sun.directional_shadow_max_distance = 150.0
 	_add(root, sun, "Sun")
 
-	# Warehouse, truck, deliveries.
 	var warehouse: Node3D = (load("res://world/warehouse.tscn") as PackedScene).instantiate()
 	warehouse.position = Vector3(-30, 0, -30)
 	_add(root, warehouse, "Warehouse")
@@ -390,45 +508,59 @@ func _build_world() -> void:
 	truck.position = Vector3(-30, 1.2, -18)
 	truck.rotation_degrees.y = 180
 	_add(root, truck, "Truck")
+	var station: Node3D = (load("res://world/fuel_station.tscn") as PackedScene).instantiate()
+	station.position = Vector3(8, 0, -24)
+	_add(root, station, "FuelStation")
 	var dp_scene: PackedScene = load("res://world/delivery_point.tscn")
 	var dp1: Node3D = dp_scene.instantiate()
-	dp1.position = Vector3(30, 0, 25)
+	dp1.position = Vector3(300, 0, 200)
 	_add(root, dp1, "DeliveryPoint1")
 	var dp2: Node3D = dp_scene.instantiate()
-	dp2.position = Vector3(-25, 0, 38)
+	dp2.position = Vector3(-250, 0, 420)
 	_add(root, dp2, "DeliveryPoint2")
 
-	# Simple obstacles.
+	# Obstacles scattered with a fixed seed (kept clear of the key locations).
 	var obstacles := Node3D.new()
 	_add(root, obstacles, "Obstacles")
+	var keep_clear: Array[Vector3] = [Vector3(-30, 0, -25), Vector3(8, 0, -24), Vector3(300, 0, 200), Vector3(-250, 0, 420)]
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 20241
 	var block_mat := _mat(Color(0.65, 0.65, 0.62), 0.9)
-	var blocks: Array[Vector3] = [
-		Vector3(-10, 0.5, -5), Vector3(5, 0.5, 5), Vector3(15, 0.5, 15), Vector3(0, 0.5, 25),
-		Vector3(-15, 0.5, 20), Vector3(20, 0.5, 35), Vector3(40, 0.5, 5),
-	]
-	for i in blocks.size():
-		_static_box(obstacles, "Block%d" % (i + 1), blocks[i], Vector3(2.5, 1.0, 1.2), block_mat, 20.0 * i)
 	var barrel_mat := _mat(Color(0.8, 0.3, 0.1), 0.5, 0.4)
+	var cone_mat := _mat(Color(0.95, 0.45, 0.1), 0.6)
 	var barrel_mesh := CylinderMesh.new()
 	barrel_mesh.top_radius = 0.45
 	barrel_mesh.bottom_radius = 0.45
 	barrel_mesh.height = 1.0
-	var barrels: Array[Vector3] = [Vector3(-5, 0.5, 12), Vector3(10, 0.5, -10), Vector3(25, 0.5, 20), Vector3(-36, 0.5, 15)]
-	for i in barrels.size():
-		var sb := StaticBody3D.new()
-		sb.position = barrels[i]
-		sb.collision_layer = LAYER_WORLD
-		sb.collision_mask = 0
-		var bcs := CollisionShape3D.new()
-		var bs := CylinderShape3D.new()
-		bs.radius = 0.45
-		bs.height = 1.0
-		bcs.shape = bs
-		_add(sb, bcs, "CollisionShape3D")
-		_mesh(sb, "Visual", barrel_mesh, barrel_mat)
-		_add(obstacles, sb, "Barrel%d" % (i + 1))
+	var cone_mesh := CylinderMesh.new()
+	cone_mesh.top_radius = 0.05
+	cone_mesh.bottom_radius = 0.35
+	cone_mesh.height = 0.8
+	var count: int = 0
+	var guard: int = 0
+	while count < 110 and guard < 2000:
+		guard += 1
+		var pos := Vector3(rng.randf_range(-480, 480), 0.0, rng.randf_range(-480, 480))
+		var ok := true
+		for k in keep_clear:
+			if pos.distance_to(k) < 35.0:
+				ok = false
+		if not ok:
+			continue
+		count += 1
+		var kind: int = rng.randi() % 3
+		var n: String = "Obstacle%d" % count
+		if kind == 0:
+			_static_box(obstacles, n, pos + Vector3(0, 0.5, 0), Vector3(2.5, 1.0, 1.2), block_mat, rng.randf_range(0, 180))
+		elif kind == 1:
+			_static_cylinder(obstacles, n, pos + Vector3(0, 0.5, 0), barrel_mesh, barrel_mat)
+		else:
+			_static_cylinder(obstacles, n, pos + Vector3(0, 0.4, 0), cone_mesh, cone_mat)
+	# A few guaranteed obstacles near the start so crashes are easy to test.
+	_static_box(obstacles, "StartBlockA", Vector3(-10, 0.5, 0), Vector3(2.5, 1.0, 1.2), block_mat, 20.0)
+	_static_box(obstacles, "StartBlockB", Vector3(20, 0.5, 15), Vector3(2.5, 1.0, 1.2), block_mat, 70.0)
+	_static_box(obstacles, "StartWall", Vector3(-60, 1.0, 40), Vector3(10, 2.0, 1.0), block_mat)
 
-	# Player (near the warehouse) and HUD.
 	var player: Node3D = (load("res://player/player.tscn") as PackedScene).instantiate()
 	player.position = Vector3(-24, 0.1, -22)
 	player.rotation_degrees.y = 180

@@ -1,0 +1,104 @@
+[gd_scene load_steps=13 format=3]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vli2o"]
+height = 4.0
+radius = 6.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5a3f"]
+albedo_color = Color(0.6, 0.6, 0.58, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="BoxMesh_rb1al"]
+size = Vector3(2, 0.3, 8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hgl3s"]
+albedo_color = Color(0.75, 0.15, 0.12, 1)
+metallic = 0.3
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_q6k3w"]
+size = Vector3(0.7, 1.6, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ght6u"]
+size = Vector3(0.7, 1.6, 0.7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lsnd6"]
+albedo_color = Color(0.55, 0.58, 0.6, 1)
+metallic = 0.9
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_donly"]
+size = Vector3(5, 0.3, 9)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yy1ly"]
+size = Vector3(0.3, 4.5, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wsux"]
+size = Vector3(0.3, 4.5, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iajmb"]
+size = Vector3(0.9, 1.6, 0.9)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mct6e"]
+size = Vector3(0.9, 1.6, 0.9)
+
+[node name="FuelStation" type="Area3D" groups=["fuel_station"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_vli2o")
+
+[node name="Visual" type="Node3D" parent="."]
+
+[node name="Island" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+material_override = SubResource("StandardMaterial3D_t5a3f")
+mesh = SubResource("BoxMesh_rb1al")
+
+[node name="PumpA" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -2)
+material_override = SubResource("StandardMaterial3D_hgl3s")
+mesh = SubResource("BoxMesh_q6k3w")
+
+[node name="PumpB" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 2)
+material_override = SubResource("StandardMaterial3D_hgl3s")
+mesh = SubResource("BoxMesh_ght6u")
+
+[node name="CanopyRoof" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.6, 0)
+material_override = SubResource("StandardMaterial3D_lsnd6")
+mesh = SubResource("BoxMesh_donly")
+
+[node name="Pillar" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -4)
+material_override = SubResource("StandardMaterial3D_lsnd6")
+mesh = SubResource("BoxMesh_yy1ly")
+
+[node name="@MeshInstance3D@2" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, 4)
+material_override = SubResource("StandardMaterial3D_lsnd6")
+mesh = SubResource("BoxMesh_0wsux")
+
+[node name="PumpBody" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="PumpACollision" type="CollisionShape3D" parent="PumpBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -2)
+shape = SubResource("BoxShape3D_iajmb")
+
+[node name="PumpBCollision" type="CollisionShape3D" parent="PumpBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 2)
+shape = SubResource("BoxShape3D_mct6e")
+
+[node name="Sign" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.6, 0)
+pixel_size = 0.01
+billboard = 1
+text = "NAFTA
+E: cargar (camión)
+Reparación $20 (a pie)"
+font_size = 72
+outline_size = 20

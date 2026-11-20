@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://world/delivery_point.gd" id="1_a8rn1"]
 
@@ -26,6 +26,16 @@ roughness = 0.5
 [sub_resource type="BoxMesh" id="BoxMesh_j660v"]
 size = Vector3(0.25, 3, 0.25)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nl03e"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.2, 0.9, 0.35, 0.25)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fqvn6"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 80.0
+
 [node name="DeliveryPoint" type="Area3D" groups=["delivery_point"]]
 collision_layer = 8
 collision_mask = 0
@@ -46,6 +56,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_sxev7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 material_override = SubResource("StandardMaterial3D_dk2hc")
 mesh = SubResource("BoxMesh_j660v")
+
+[node name="Beacon" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40, 0)
+material_override = SubResource("StandardMaterial3D_nl03e")
+mesh = SubResource("CylinderMesh_fqvn6")
 
 [node name="Sign" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 0)
