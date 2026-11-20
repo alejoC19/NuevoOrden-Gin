@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Shader" path="res://ui/post_fx.gdshader" id="1_myofq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4xo2f"]
+shader = ExtResource("1_myofq")
+shader_parameter/aberration = null
+shader_parameter/vignette = null
+
+[node name="PostFx" type="CanvasLayer"]
+layer = 0
+
+[node name="Overlay" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_4xo2f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2

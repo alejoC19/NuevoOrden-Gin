@@ -1,0 +1,16 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/brick/albedo.jpg" id="1_lfo6t"]
+[ext_resource type="Texture2D" path="res://assets/textures/brick/normal.jpg" id="2_ix8n2"]
+
+[resource]
+resource_name = "brick"
+albedo_texture = ExtResource("1_lfo6t")
+metallic_specular = 0.2
+roughness = 0.8
+normal_enabled = true
+normal_texture = ExtResource("2_ix8n2")
+uv1_scale = Vector3(0.16, 0.16, 0.16)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 5

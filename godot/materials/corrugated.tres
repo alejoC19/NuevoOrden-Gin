@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/corrugated/albedo.jpg" id="1_p0fw4"]
+[ext_resource type="Texture2D" path="res://assets/textures/corrugated/normal.jpg" id="2_u4d7m"]
+[ext_resource type="Texture2D" path="res://assets/textures/corrugated/roughness.jpg" id="3_wab71"]
+
+[resource]
+resource_name = "corrugated"
+albedo_texture = ExtResource("1_p0fw4")
+metallic = 0.85
+roughness = 0.6
+roughness_texture = ExtResource("3_wab71")
+normal_enabled = true
+normal_texture = ExtResource("2_u4d7m")
+uv1_scale = Vector3(0.35, 0.35, 0.35)
+uv1_triplanar = true
+uv1_world_triplanar = true
+texture_filter = 5

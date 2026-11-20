@@ -140,7 +140,7 @@ func _ready() -> void:
 	world.add_child(wall)
 	wall.global_position = Vector3(-100, 2, 260)
 	# Slow bump (<3 m/s): nothing happens.
-	await place(Vector3(-100, 0.3, 255.5))
+	await place(Vector3(-100, 0.3, 256.8))
 	truck.wear = 0.0
 	Input.action_press("move_forward")
 	await seconds(2.0)

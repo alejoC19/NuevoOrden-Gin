@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/wooden_crate_01/wooden_crate_01.gltf" id="1_jsorc"]
+
+[node name="CrateModel" type="Node3D"]
+
+[node name="Model" type="Node3D" parent="." instance=ExtResource("1_jsorc")]
+transform = Transform3D(0.96937627, 0, 0, 0, 0.96937627, 0, 0, 0, 0.96937627, 0, -0.16176544, -0.008081927)

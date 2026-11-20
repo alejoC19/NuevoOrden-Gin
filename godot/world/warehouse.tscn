@@ -1,66 +1,81 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene load_steps=33 format=3]
 
-[ext_resource type="PackedScene" path="res://world/cargo_pickup.tscn" id="1_ub4ya"]
-[ext_resource type="Script" path="res://world/cargo_pickup.gd" id="2_eseg8"]
+[ext_resource type="Material" path="res://materials/concrete.tres" id="1_078f4"]
+[ext_resource type="Material" path="res://materials/brick.tres" id="2_dxdlj"]
+[ext_resource type="Material" path="res://materials/corrugated.tres" id="3_48ray"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/steel_frame_shelves_01/steel_frame_shelves_01.gltf" id="4_lp1nb"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/rollershutter_door/rollershutter_door.gltf" id="5_tyoeo"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/cement_bag/cement_bag.gltf" id="6_7difh"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/utility_box_01/utility_box_01.gltf" id="7_u01em"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/old_tyre/old_tyre.gltf" id="8_h6bls"]
+[ext_resource type="PackedScene" path="res://assets/models/polyhaven/barrel_03/barrel_03.gltf" id="9_c53ji"]
+[ext_resource type="PackedScene" path="res://world/cargo_pickup.tscn" id="10_g4pfl"]
+[ext_resource type="Script" path="res://world/cargo_pickup.gd" id="11_0jfio"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rs8cm"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_oo4it"]
 size = Vector3(16, 0.2, 12)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x1qoc"]
-albedo_color = Color(0.62, 0.62, 0.6, 1)
-roughness = 0.9
-
-[sub_resource type="BoxMesh" id="BoxMesh_1dx6y"]
+[sub_resource type="BoxMesh" id="BoxMesh_og48l"]
 size = Vector3(16, 0.2, 12)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kgq4m"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_i5erl"]
 size = Vector3(16, 4, 0.3)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxaph"]
-albedo_color = Color(0.35, 0.4, 0.45, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_14t2p"]
+size = Vector3(16, 4, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cc4lj"]
+size = Vector3(0.3, 4, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f35u7"]
+size = Vector3(0.3, 4, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_404v6"]
+size = Vector3(0.3, 4, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hgvqd"]
+size = Vector3(0.3, 4, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m3wkg"]
+size = Vector3(16.6, 0.3, 12.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fx2sm"]
+size = Vector3(16.6, 0.3, 12.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hh5wl"]
+size = Vector3(16.6, 0.4, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xta7y"]
+albedo_color = Color(0.25, 0.25, 0.27, 1)
 metallic = 0.8
 roughness = 0.5
 
-[sub_resource type="BoxMesh" id="BoxMesh_wydkq"]
-size = Vector3(16, 4, 0.3)
+[sub_resource type="BoxMesh" id="BoxMesh_ybm36"]
+size = Vector3(16.6, 0.4, 0.3)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rega8"]
-size = Vector3(0.3, 4, 12)
+[sub_resource type="BoxShape3D" id="BoxShape3D_yigft"]
+size = Vector3(1.1791884, 2.3, 0.53953284)
 
-[sub_resource type="BoxMesh" id="BoxMesh_078f4"]
-size = Vector3(0.3, 4, 12)
+[sub_resource type="BoxShape3D" id="BoxShape3D_q6xh0"]
+size = Vector3(1.1791884, 2.3, 0.53953284)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dxdlj"]
-size = Vector3(0.3, 4, 12)
+[sub_resource type="BoxShape3D" id="BoxShape3D_l8wec"]
+size = Vector3(1.1791884, 2.3, 0.53953284)
 
-[sub_resource type="BoxMesh" id="BoxMesh_48ray"]
-size = Vector3(0.3, 4, 12)
+[sub_resource type="BoxShape3D" id="BoxShape3D_pybie"]
+size = Vector3(0.59496266, 0.2314502, 0.90000004)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_lp1nb"]
-size = Vector3(16.6, 0.3, 12.6)
+[sub_resource type="BoxShape3D" id="BoxShape3D_3o511"]
+size = Vector3(0.59496266, 0.2314502, 0.90000004)
 
-[sub_resource type="BoxMesh" id="BoxMesh_tyoeo"]
-size = Vector3(16.6, 0.3, 12.6)
+[sub_resource type="BoxShape3D" id="BoxShape3D_g32xj"]
+size = Vector3(0.6498068, 1.4, 0.53983927)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7difh"]
-size = Vector3(3, 1.6, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_c66gs"]
+size = Vector3(0.90000004, 0.90000004, 0.24749999)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u01em"]
-albedo_color = Color(0.5, 0.36, 0.2, 1)
-roughness = 0.8
-
-[sub_resource type="BoxMesh" id="BoxMesh_h6bls"]
-size = Vector3(3, 1.6, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_c53ji"]
-size = Vector3(3, 1.6, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g4pfl"]
-albedo_color = Color(0.5, 0.36, 0.2, 1)
-roughness = 0.8
-
-[sub_resource type="BoxMesh" id="BoxMesh_0jfio"]
-size = Vector3(3, 1.6, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_b0w2v"]
+size = Vector3(0.6813127, 0.99999994, 0.6863166)
 
 [node name="Warehouse" type="Node3D" groups=["warehouse"]]
 
@@ -71,107 +86,193 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/Floor"]
-shape = SubResource("BoxShape3D_rs8cm")
+shape = SubResource("BoxShape3D_oo4it")
 
 [node name="Visual" type="MeshInstance3D" parent="Structure/Floor"]
-material_override = SubResource("StandardMaterial3D_x1qoc")
-mesh = SubResource("BoxMesh_1dx6y")
+material_override = ExtResource("1_078f4")
+mesh = SubResource("BoxMesh_og48l")
 
 [node name="BackWall" type="StaticBody3D" parent="Structure"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -5.9)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/BackWall"]
-shape = SubResource("BoxShape3D_kgq4m")
+shape = SubResource("BoxShape3D_i5erl")
 
 [node name="Visual" type="MeshInstance3D" parent="Structure/BackWall"]
-material_override = SubResource("StandardMaterial3D_wxaph")
-mesh = SubResource("BoxMesh_wydkq")
+material_override = ExtResource("2_dxdlj")
+mesh = SubResource("BoxMesh_14t2p")
 
 [node name="LeftWall" type="StaticBody3D" parent="Structure"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.85, 2.2, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/LeftWall"]
-shape = SubResource("BoxShape3D_rega8")
+shape = SubResource("BoxShape3D_cc4lj")
 
 [node name="Visual" type="MeshInstance3D" parent="Structure/LeftWall"]
-material_override = SubResource("StandardMaterial3D_wxaph")
-mesh = SubResource("BoxMesh_078f4")
+material_override = ExtResource("2_dxdlj")
+mesh = SubResource("BoxMesh_f35u7")
 
 [node name="RightWall" type="StaticBody3D" parent="Structure"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.85, 2.2, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/RightWall"]
-shape = SubResource("BoxShape3D_dxdlj")
+shape = SubResource("BoxShape3D_404v6")
 
 [node name="Visual" type="MeshInstance3D" parent="Structure/RightWall"]
-material_override = SubResource("StandardMaterial3D_wxaph")
-mesh = SubResource("BoxMesh_48ray")
+material_override = ExtResource("2_dxdlj")
+mesh = SubResource("BoxMesh_hgvqd")
 
 [node name="Roof" type="StaticBody3D" parent="Structure"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/Roof"]
-shape = SubResource("BoxShape3D_lp1nb")
+shape = SubResource("BoxShape3D_m3wkg")
 
 [node name="Visual" type="MeshInstance3D" parent="Structure/Roof"]
-material_override = SubResource("StandardMaterial3D_wxaph")
-mesh = SubResource("BoxMesh_tyoeo")
+material_override = ExtResource("3_48ray")
+mesh = SubResource("BoxMesh_fx2sm")
 
-[node name="ShelfA" type="StaticBody3D" parent="Structure"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0.8, -5)
+[node name="RoofBeam" type="StaticBody3D" parent="Structure"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15, 5.9)
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/ShelfA"]
-shape = SubResource("BoxShape3D_7difh")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/RoofBeam"]
+shape = SubResource("BoxShape3D_hh5wl")
 
-[node name="Visual" type="MeshInstance3D" parent="Structure/ShelfA"]
-material_override = SubResource("StandardMaterial3D_u01em")
-mesh = SubResource("BoxMesh_h6bls")
+[node name="Visual" type="MeshInstance3D" parent="Structure/RoofBeam"]
+material_override = SubResource("StandardMaterial3D_xta7y")
+mesh = SubResource("BoxMesh_ybm36")
 
-[node name="ShelfB" type="StaticBody3D" parent="Structure"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.5, 0.8, -5)
+[node name="Props" type="Node3D" parent="."]
+
+[node name="Shelf1" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.2, 0.2, -5)
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Structure/ShelfB"]
-shape = SubResource("BoxShape3D_c53ji")
+[node name="Model" type="Node3D" parent="Props/Shelf1" instance=ExtResource("4_lp1nb")]
+transform = Transform3D(0.1074515, 0, 0, 0, 0.1074515, 0, 0, 0, 0.1074515, -2.2441747e-05, 0.0011474643, 0)
 
-[node name="Visual" type="MeshInstance3D" parent="Structure/ShelfB"]
-material_override = SubResource("StandardMaterial3D_g4pfl")
-mesh = SubResource("BoxMesh_0jfio")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Shelf1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_yigft")
 
-[node name="CargoPickup1" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("1_ub4ya")]
+[node name="Shelf2" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -5)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/Shelf2" instance=ExtResource("4_lp1nb")]
+transform = Transform3D(0.1074515, 0, 0, 0, 0.1074515, 0, 0, 0, 0.1074515, -2.2441747e-05, 0.0011474643, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Shelf2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_q6xh0")
+
+[node name="Shelf3" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2, 0.2, -5)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/Shelf3" instance=ExtResource("4_lp1nb")]
+transform = Transform3D(0.1074515, 0, 0, 0, 0.1074515, 0, 0, 0, 0.1074515, -2.2441747e-05, 0.0011474643, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Shelf3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.15, 0)
+shape = SubResource("BoxShape3D_l8wec")
+
+[node name="Door" type="StaticBody3D" parent="Props"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.65, 0.2, 2)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/Door" instance=ExtResource("5_tyoeo")]
+transform = Transform3D(1.1038961, 0, 0, 0, 1.1038961, 0, 0, 0, 1.1038961, -1.103896, -2.5249724e-06, -0.16452782)
+
+[node name="CementA" type="StaticBody3D" parent="Props"]
+transform = Transform3D(0.9396926, 0, 0.34202012, 0, 1, 0, -0.34202012, 0, 0.9396926, 6.2, 0.2, -3.8)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/CementA" instance=ExtResource("6_7difh")]
+transform = Transform3D(1.2864786, 0, 0, 0, 1.2864786, 0, 0, 0, 1.2864786, -0.0030648652, -0.0016535681, -0.002048509)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/CementA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1157251, 0)
+shape = SubResource("BoxShape3D_pybie")
+
+[node name="CementB" type="StaticBody3D" parent="Props"]
+transform = Transform3D(0.81915206, 0, -0.57357645, 0, 1, 0, 0.57357645, 0, 0.81915206, 6.9, 0.2, -3.2)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/CementB" instance=ExtResource("6_7difh")]
+transform = Transform3D(1.2864786, 0, 0, 0, 1.2864786, 0, 0, 0, 1.2864786, -0.0030648652, -0.0016535681, -0.002048509)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/CementB"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1157251, 0)
+shape = SubResource("BoxShape3D_3o511")
+
+[node name="BoxA" type="StaticBody3D" parent="Props"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -7.4, 0.2, 3.2)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/BoxA" instance=ExtResource("7_u01em")]
+transform = Transform3D(1.249628, 0, 0, 0, 1.249628, 0, 0, 0, 1.249628, 0, 0, -0.007497764)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/BoxA"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("BoxShape3D_g32xj")
+
+[node name="Tyre" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.4, 0.2, 4.4)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/Tyre" instance=ExtResource("8_h6bls")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.45000002, 0.0003949888)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Tyre"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45000002, 0)
+shape = SubResource("BoxShape3D_c66gs")
+
+[node name="Barrel" type="StaticBody3D" parent="Props"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.1, 0.2, -2.4)
+collision_mask = 0
+
+[node name="Model" type="Node3D" parent="Props/Barrel" instance=ExtResource("9_c53ji")]
+transform = Transform3D(1.0747215, 0, 0, 0, 1.0747215, 0, 0, 0, 1.0747215, -3.2029195e-08, 1.2675193e-07, -3.2029195e-07)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Props/Barrel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49999997, 0)
+shape = SubResource("BoxShape3D_b0w2v")
+
+[node name="CargoPickup1" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("10_g4pfl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.2, -2)
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_eseg8")
+script = ExtResource("11_0jfio")
 
-[node name="CargoPickup2" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("1_ub4ya")]
+[node name="CargoPickup2" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("10_g4pfl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.2, -2)
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_eseg8")
+script = ExtResource("11_0jfio")
 
-[node name="CargoPickup3" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("1_ub4ya")]
+[node name="CargoPickup3" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("10_g4pfl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -2)
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_eseg8")
+script = ExtResource("11_0jfio")
 
-[node name="CargoPickup4" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("1_ub4ya")]
+[node name="CargoPickup4" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("10_g4pfl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.2, -2)
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_eseg8")
+script = ExtResource("11_0jfio")
 
-[node name="CargoPickup5" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("1_ub4ya")]
+[node name="CargoPickup5" type="Area3D" parent="." groups=["cargo_pickup"] instance=ExtResource("10_g4pfl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.2, -2)
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("2_eseg8")
+script = ExtResource("11_0jfio")
 
 [node name="Sign" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.6, 6.4)
