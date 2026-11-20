@@ -3,3 +3,6 @@ dist
 .DS_Store
 dist-m
 promo/
+
+# Godot
+godot/.godot/
