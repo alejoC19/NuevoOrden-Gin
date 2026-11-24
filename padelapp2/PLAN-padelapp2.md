@@ -1,98 +1,97 @@
-# @padelapp2 · Plan de Community Manager (borrador v1)
+# @padelapp2 · Plan de Community Manager (v2, basado en padelapp2.com)
 
-> **Supuestos a corregir:** Padelapp = app para reservar canchas y armar partidos de pádel. Público: jugadores (clientes finales)
-> y clubes (quienes cargan sus canchas). Zona: Argentina. Tono: cercano, voseo, humor de cancha.
-> Todo lo marcado con `[COMPLETAR]` necesita datos reales de la app (link, funciones, precios, ciudad).
+## 1. Qué vendemos y a quién
+- **Producto:** sistema de gestión web para clubes de pádel. Agenda por cancha, reservas online de los jugadores (sin instalar nada), caja, clientes, buffet, torneos, reportes y tesorería.
+- **Cliente a conseguir:** dueños y administradores de clubes de pádel (Buenos Aires y Argentina). Los jugadores son un canal secundario: reservan desde el celular y empujan al club a adoptar el sistema.
+- **Precios publicados (mensual):** Starter $45.000 (hasta 3 canchas) · Pro $70.000 (hasta 4 canchas, buffet, torneos, facturación, WhatsApp) · Enterprise $150.000 (ilimitado, varias sedes).
+- **Oferta:** 30 días gratis en cualquier plan.
+- **Contacto de venta:** WhatsApp wa.me/542273418842 · padelapp2@gmail.com.
+- **Frases propias de la web (usarlas, ya son la voz de marca):** "Tus jugadores reservan solos. Vos manejás todo el club." · "El cuaderno y el grupo de WhatsApp ya no alcanzan." · "Todo tu club en un solo lugar."
+- **Tono:** directo, voseo, frases cortas, problema → solución.
 
-## 1. Posicionamiento
-- **Promesa:** "Jugá más. Organizá menos."
-- **Dolor que atacamos:** grupos de WhatsApp caóticos, el que se baja a último momento, canchas que no se consiguen.
-- **Dos audiencias, dos mensajes:**
-  - Jugadores → comodidad, partidos completos, reservar rápido.
-  - Clubes → llenar horarios valle, menos llamados y planillas, más reservas.
-- **Identidad visual:** azul marino `#0B1B3A`→`#12396B`, verde pelota `#C6F432`, tipografía Inter negrita. (Cambiar si ya tienen logo y colores.)
+## 2. Objetivo y embudo
+Perfil de Instagram → mensaje por DM o WhatsApp → demo (`/agenda`) → 30 días gratis → plan pago.
+- **Bio sugerida:** "Sistema de gestión para clubes de pádel 🎾 Agenda, caja, buffet y torneos. Tus jugadores reservan solos. 30 días gratis 👇" + link a padelapp2.com o al WhatsApp.
+- **Pendiente:** la web no tiene enlaces a Instagram. Conviene agregar el perfil en el pie de la web.
 
-## 2. Cadencia
-- Feed: 3 por semana (martes, jueves, sábado) · Reels: 2 de esos 3.
-- Stories: 1 a 3 por día con encuestas y "falta uno".
-- Horarios sugeridos para probar (se ajustan con las métricas reales): 12:30, 19:30 y 21:00.
-- Responder comentarios y DMs en menos de 2 horas en horario hábil.
+## 3. Cadencia
+- Feed: 3 por semana (martes, jueves, sábado), 2 de ellos en reel.
+- Stories: 1 a 3 por día, con encuestas y capturas de la demo.
+- Horarios para probar: clubes y administradores responden mejor entre semana, de 9 a 11 h y de 15 a 17 h. Ajustar con las métricas reales.
 
-## 3. Calendario semana 1 (lista para publicar)
-
+## 4. Semana 1 (piezas listas en `contenido/`)
 | Día | Formato | Pieza | Caption |
 |---|---|---|---|
-| Mar | Carrusel (5) | `carrusel-01` a `carrusel-05` | Ver caption A |
-| Jue | Reel (15–20 s) | Guion R1 | Ver caption B |
-| Sáb | Imagen | `clubes-canchas-vacias.png` | Ver caption C |
-| Todos | Story | `story-falta-uno.png` + sticker de link | "¿Te falta uno hoy? 👇" |
+| Mar | Carrusel (5) | `carrusel-01` a `carrusel-05` | A |
+| Jue | Reel | Guion R1 | B |
+| Sáb | Imagen | `planes-precios.png` | C |
+| Todos | Story | `story-cuaderno.png` + sticker de link y encuesta | "¿Todavía en cuaderno? 👀" |
 
 **Caption A (carrusel):**
-> Armar un partido no debería ser tan difícil 😮‍💨
-> Grupo de WhatsApp con 40 mensajes, uno que se baja a último momento… y la cancha sin reservar.
-> En Padelapp ves canchas, armás el partido y reservás en pocos toques.
-> Descargala desde el link en bio 👆
-> ¿Cuántas veces te pasó? Contanos en los comentarios 👇
-> #padel #padelargentina #padelamigos #jugamospadel #padelapp
+> ¿Todavía anotás los turnos en un cuaderno? 📒
+> El cuaderno y el grupo de WhatsApp ya no alcanzan.
+> Con PadelApp2 manejás agenda, caja, buffet, torneos y reportes en un solo lugar, y tus jugadores reservan solos desde el celular.
+> Probalo 30 días gratis. Escribinos por DM o desde el link en bio 👆
+> #clubdepadel #padelargentina #gestiondeclubes #padel #canchasdepadel
 
 **Caption B (reel):**
-> Cuando alguien se baja 10 minutos antes… 🫠 Con Padelapp lo cubrís en un toque. Link en bio.
-> #padel #padelargentina #padelreels #falta1
+> Así se ve el turno de un club con y sin sistema 👇 Arrastrás, soltás y listo: sin superposiciones. 30 días gratis, link en bio.
+> #clubdepadel #padelargentina #gestiondeclubes
 
-**Caption C (clubes):**
-> ¿Tu club tiene canchas vacías en horarios valle? 🎾
-> Padelapp te ayuda a llenarlas. Escribinos por DM y te contamos cómo.
-> #clubdepadel #padelargentina #gestionclubes
+**Caption C (planes):**
+> Un plan para cada tamaño de club 🎾 Desde $45.000/mes y 30 días gratis en cualquiera. Mirá los planes en padelapp2.com o escribinos por DM.
+> #clubdepadel #padelargentina #emprendedoresdelpadel
 
-**Guion Reel R1 "Falta uno" (15–20 s):**
-1. (0–3 s) Texto en pantalla: "10 min antes del partido…" Plano de celular con grupo de WhatsApp.
-2. (3–7 s) Mensajes: "me bajo", "no puedo", "¿quién se suma?". Cara de resignación.
-3. (7–14 s) Grabación de pantalla de la app: buscar partido → sumarse → confirmado. `[COMPLETAR con capturas reales]`
-4. (14–18 s) Texto: "Falta uno resuelto." + logo + "Link en bio".
-- Audio: tema en tendencia de pádel o sonido original. Subtítulos siempre.
+**Guion Reel R1 "Cuaderno vs. agenda" (15–20 s):**
+1. (0–4 s) Cuaderno con turnos tachados y un celular que suena. Texto: "Turno doble. Otra vez."
+2. (4–12 s) Grabación de pantalla de `/agenda`: arrastrar un turno, cobrar en el momento. Texto: "Sin superposiciones".
+3. (12–16 s) Pantalla de reservas del jugador: "Tus jugadores reservan solos".
+4. (16–20 s) Logo + "30 días gratis · Link en bio".
+- Usar la demo real de padelapp2.com/agenda. Subtítulos siempre.
 
-## 4. Ideas para las semanas 2–4
-- **Semana 2:** "3 errores que todos cometemos en la bandeja" (educativo) · reel POV "el que siempre llega tarde" · testimonio de un jugador.
-- **Semana 3:** tour de la app en 30 s (reel) · carrusel "cómo reservar en 3 pasos" · encuesta en stories "¿derecha o revés?".
-- **Semana 4:** caso de un club `[COMPLETAR]` · sorteo (una hora de cancha o una pala) para ganar seguidores · recopilación de lo mejor del mes.
-- **Fijos:** 1 reel de humor por semana, 1 de utilidad, 1 de prueba social.
+## 5. Ideas para las semanas 2–4
+- **Semana 2:** "5 cosas que pierde un club por no tener cierre de caja" · reel del buffet (stock y cobro integrado) · carrusel de torneos (cuadro automático).
+- **Semana 3:** "¿Cuánto vale una hora de cancha vacía?" (calculadora simple) · reel del reporte de ocupación · testimonio de un club real.
+- **Semana 4:** comparación de planes Starter y Pro · caso de uso de un club chico · preguntas frecuentes en stories.
+- **Prueba social:** la web muestra una franja de clubes que usan el sistema. Pedir permiso para mostrar casos reales antes de nombrarlos.
 
-## 5. Captación por mensajes (DM)
-**Regla:** nada de DMs masivos en frío (Instagram limita la cuenta). Máximo 15–20 mensajes personalizados por día, primero interactuar con el contenido del club (seguir, comentar, ver stories).
+## 6. Captación por mensajes (DM y WhatsApp)
+**Regla:** nada de DMs masivos en frío (Instagram limita la cuenta). Máximo 15–20 por día, personalizados, interactuando antes con la cuenta del club (seguir, comentar, ver stories).
 
 **Primer mensaje a un club:**
-> Hola [Club] 👋 Soy [Nombre] de Padelapp. Vimos que tienen [N] canchas y queríamos preguntarte algo: ¿tienen horarios que les cuesta llenar? Ayudamos a clubes a que los jugadores reserven y armen partidos desde el celular. Si te interesa te cuento en 2 minutos cómo funciona.
+> Hola [Club] 👋 Soy [Nombre] de PadelApp2. Vi que tienen [N] canchas. Hacemos un sistema para clubes de pádel: agenda por cancha, reservas online de los jugadores, caja, buffet y torneos. ¿Hoy cómo llevan los turnos, cuaderno o algún sistema?
 
-**Seguimiento (a los 3 días, si no responde):**
-> ¡Hola de nuevo! Sin apuro 🙂 Te dejo una captura de cómo se ve para el jugador. Si querés, te armo una prueba gratis para [Club]. `[COMPLETAR oferta]`
+**Seguimiento (3 días después):**
+> ¡Hola de nuevo! Te dejo la demo para que la veas sin compromiso: padelapp2.com/agenda. Y si querés, arrancan 30 días gratis con [Club].
 
-**Primer mensaje a un jugador que comenta o sigue la cuenta:**
-> ¡Gracias por seguirnos! 🎾 ¿Jugás seguido? Si querés armar partidos más fácil, te paso el link para probar Padelapp.
+**Si el club dice que sí:**
+> ¡Genial! Te escribo por WhatsApp para armar tu club: wa.me/542273418842. En 15 minutos lo dejamos cargado.
 
 **Objeciones frecuentes:**
-- "Ya usamos otra cosa" → "Perfecto, ¿qué es lo que menos te gusta de ese sistema?"
-- "Es caro" → "Entendido. Probemos sin costo con tus horarios valle y vemos si suma." `[COMPLETAR]`
-- "No tengo tiempo" → "Lo cargamos nosotros. Son 15 minutos."
+- "Ya tenemos un sistema" → "Perfecto. ¿Qué es lo que menos te gusta de ese sistema? Muchos clubes nos cuentan que lo más pesado es [caja/torneos/buffet]."
+- "Es caro" → "Entiendo. Probás 30 días gratis y medís cuántas reservas nuevas entran. El Starter sale $45.000 por mes."
+- "Mis jugadores no van a usarlo" → "No instalan nada: reservan desde el celular con un link. Lo probamos con tus horarios valle."
 
-**Respuestas rápidas a comentarios:** "¿Dónde la descargo?" → "Link en bio 👆 ¡Gracias por preguntar!"
-
-## 6. Publicidad (Meta Ads) — plan inicial
-**Presupuesto sugerido para probar:** USD 5–10 por día durante 2 semanas `[COMPLETAR según el presupuesto real]`.
+## 7. Publicidad (Meta Ads)
+Presupuesto de prueba: USD 5–10 por día durante 2 semanas `[COMPLETAR]`.
 
 | Campaña | Objetivo | Público | Creatividad |
 |---|---|---|---|
-| A. Descargas | Instalaciones de la app | 18–45 años, intereses: pádel, tenis, deportes de raqueta, en tu zona | Carrusel 01–05 y reel R1 |
-| B. Clubes | Mensajes (WhatsApp o Instagram) | Dueños y administradores de clubes: intereses en gestión de clubes deportivos, radio 15–30 km | `clubes-canchas-vacias.png` |
-| C. Retargeting | Conversiones | Quienes vieron el 50 % del reel o visitaron el perfil | Testimonio o oferta |
+| A. Clubes por WhatsApp | Mensajes a WhatsApp | Argentina, 25–60 años, intereses: pádel, gestión de clubes, emprendedores deportivos; empezar por Buenos Aires | Carrusel 01–05 y reel R1 |
+| B. Planes | Tráfico a padelapp2.com | Mismo público | `planes-precios.png` |
+| C. Retargeting | Mensajes | Quienes vieron el 50 % del reel o visitaron el perfil o la web | Prueba social y "30 días gratis" |
 
-**Cómo medirlo:** costo por instalación, costo por conversación iniciada, CTR, frecuencia. Dejar 3–4 días para aprender antes de tocar nada. Pausar creatividades con CTR bajo 0,8 % después de unos 1.000 impresiones. Promocionar primero los posts orgánicos que mejor rindan.
+- **Métricas:** costo por conversación de WhatsApp, CTR, frecuencia y cuántas pasan a demo o prueba. Dejar 3–4 días de aprendizaje.
+- **Requisito:** vincular `@padelapp2` a una página de Facebook y a una cuenta publicitaria propia en Meta Business Suite.
+- **Seguimiento:** instalar el píxel de Meta en padelapp2.com para medir visitas y clics a WhatsApp.
 
-**Requisito:** para anunciar como `@padelapp2`, la cuenta tiene que estar vinculada a una página de Facebook y a una cuenta publicitaria propia (Meta Business Suite).
+## 8. Lista de clubes a contactar
+Armar una planilla (club, zona, canchas, Instagram, estado del contacto). Buscar por hashtags de la zona (#padelbsas, #clubdepadel) y en Google Maps ("club de pádel" + barrio). Con la planilla armada se pueden personalizar los primeros mensajes.
 
-## 7. Qué necesito para el v2
-1. Link de la app, logo, colores y capturas reales.
-2. Funciones reales y diferenciales (para ajustar los textos).
-3. Ciudad o zona y clubes donde ya funciona.
-4. Oferta para clubes y para jugadores.
-5. Presupuesto de anuncios.
-6. Fotos o videos de canchas y partidos (propios o con permiso).
+## 9. Pendientes para v3
+1. Logo y colores oficiales (los de las piezas son provisorios: azul marino `#0B1B3A` y verde `#C6F432`).
+2. Capturas y video de pantalla de la demo para los reels.
+3. Confirmar que los precios son en pesos argentinos y si se mantienen.
+4. Confirmar quién atiende el WhatsApp de ventas y en qué horarios.
+5. Casos de clubes reales con permiso para mostrarlos.
+6. Presupuesto de anuncios.
